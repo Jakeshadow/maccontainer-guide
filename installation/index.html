@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Apple Container Setup — Install & Run First Container in 10 Minutes</title>
+  <meta name="description" content="Install Apple Container on macOS 26, configure DNS, and run your first container. Clear step-by-step with verified commands.">
+  <meta property="og:title" content="Apple Container Setup — Install & Run First Container in 10 Minutes">
+  <meta property="og:description" content="Install Apple Container on macOS 26, configure DNS, and run your first container. Step-by-step with verified commands.">
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="https://maccontainer.dev/installation/">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Apple Container Setup — Install & Run First Container in 10 Minutes">
+  <meta name="twitter:description" content="Install Apple Container on macOS 26, configure DNS, and run your first container.">
+  <link rel="stylesheet" href="/css/style.css">
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+  <link rel="canonical" href="https://maccontainer.dev/installation/">
+</head>
+<body>
+  <nav class="nav">
+    <div class="nav-inner">
+      <a href="/" class="nav-logo"><span>&#9670;</span> MacContainer.dev</a>
+      <ul class="nav-links" id="nav-links">
+        <li><a href="/">Home</a></li>
+        <li><a href="/installation/">Installation</a></li>
+        <li><a href="/compose-alternative/">Compose Alt</a></li>
+        <li><a href="/stack-templates/">Stacks</a></li>
+        <li><a href="/production-guide/">Manual</a></li>
+        <li><a href="/faq/">FAQ</a></li>
+      </ul>
+      <button class="nav-toggle" id="nav-toggle" aria-label="Toggle navigation">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </nav>
+
+  <main>
+    <section class="hero">
+      <div class="container">
+        <p class="hero-badge">Part 1 of 3</p>
+        <h1>Install Apple Container &amp; Run Your First Container</h1>
+        <p class="hero-subtitle">10 minutes from zero to working container. No Docker Desktop required.</p>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container">
+        <h2>Prerequisites</h2>
+        <div class="compare-grid">
+          <div>
+            <h3>You need</h3>
+            <ul>
+              <li>macOS 26 or later</li>
+              <li>Apple Silicon Mac (M1/M2/M3/M4)</li>
+              <li>Homebrew installed</li>
+              <li>Terminal access</li>
+            </ul>
+          </div>
+          <div>
+            <h3>You don't need</h3>
+            <ul>
+              <li>Docker Desktop (uninstall it now, or keep both — they coexist)</li>
+              <li>Xcode or developer tools beyond what Homebrew requires</li>
+              <li>A paid license — Apple Container is free</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section section-alt">
+      <div class="container">
+        <h2>Step 1: Install Apple Container</h2>
+        <pre><code>brew install container</code></pre>
+        <p>This installs the <code>container</code> CLI. Verify with:</p>
+        <pre><code>container version</code></pre>
+        <p>Expected output: version string with build info. If you see <code>command not found</code>, restart your terminal or run <code>brew link container</code>.</p>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container">
+        <h2>Step 2: Start the Container System</h2>
+        <pre><code>container system start</code></pre>
+        <p>This initializes the Virtualization.framework backend. You'll be prompted for your password once — Apple Container needs it to create VMs. After the first run, it starts automatically on login (configurable via <code>launchd</code>).</p>
+        <p>Verify the system is running:</p>
+        <pre><code>container system status</code></pre>
+      </div>
+    </section>
+
+    <section class="section section-alt">
+      <div class="container">
+        <h2>Step 3: Configure DNS</h2>
+        <p>Apple Container uses its own DNS domain for inter-container communication. Set it once:</p>
+        <pre><code>container system property set dns.domain dev.internal</code></pre>
+        <p>This means containers can reach each other at <code>container-name.dev.internal</code> — no port mapping needed. Each container gets its own IP on the virtual network.</p>
+        <div class="note">
+          <strong>Key difference from Docker:</strong> No <code>-p 8080:80</code> port mapping. In Apple Container, each container has its own IP. You access it directly at <code>&lt;container-ip&gt;:80</code> or via DNS at <code>&lt;name&gt;.dev.internal:80</code>.
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container">
+        <h2>Step 4: Pull and Run Your First Container</h2>
+        <p>Pull an image from Docker Hub (OCI compatible):</p>
+        <pre><code>container pull nginx:latest</code></pre>
+        <p>Run it:</p>
+        <pre><code>container run --name my-nginx nginx:latest</code></pre>
+        <p>Check it's running:</p>
+        <pre><code>container ps
+CONTAINER ID   NAME       IMAGE          STATUS    IP
+abc123def456   my-nginx   nginx:latest   running   10.0.0.2</code></pre>
+        <p>Access it at <code>http://10.0.0.2</code> or <code>http://my-nginx.dev.internal</code> — you should see the Nginx welcome page.</p>
+      </div>
+    </section>
+
+    <section class="section section-alt">
+      <div class="container">
+        <h2>Docker &#8594; Apple Container Command Cheat Sheet</h2>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr><th>Action</th><th>Docker</th><th>Apple Container</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>List containers</td><td><code>docker ps</code></td><td><code>container ps</code></td></tr>
+              <tr><td>Run a container</td><td><code>docker run -d --name X image</code></td><td><code>container run --name X image</code></td></tr>
+              <tr><td>Stop a container</td><td><code>docker stop X</code></td><td><code>container stop X</code></td></tr>
+              <tr><td>Remove a container</td><td><code>docker rm X</code></td><td><code>container rm X</code></td></tr>
+              <tr><td>View logs</td><td><code>docker logs X</code></td><td><code>container logs X</code></td></tr>
+              <tr><td>Execute in container</td><td><code>docker exec -it X sh</code></td><td><code>container exec X sh</code></td></tr>
+              <tr><td>Pull an image</td><td><code>docker pull image</code></td><td><code>container pull image</code></td></tr>
+              <tr><td>List images</td><td><code>docker images</code></td><td><code>container images</code></td></tr>
+              <tr><td>Bind mount</td><td><code>-v /host/path:/container/path</code></td><td><code>--mount type=bind,src=/host/path,dst=/container/path</code></td></tr>
+              <tr><td>Named volume</td><td><code>-v vol_name:/path</code></td><td><code>--mount type=volume,src=vol_name,dst=/path</code></td></tr>
+              <tr><td>Environment variable</td><td><code>-e KEY=val</code></td><td><code>--env KEY=val</code></td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container" style="text-align:center;">
+        <h2>Next: Solve the Compose Problem</h2>
+        <p class="section-lead">You've got a single container running. Now let's handle multi-container setups — without compose.</p>
+        <a href="/compose-alternative/" class="btn btn-primary">Compose Alternative &#8594;</a>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="container">
+      <p>MacContainer.dev — unofficial community guide. Not affiliated with Apple Inc.</p>
+      <p><a href="/privacy/" style="color:var(--text-secondary);">Privacy</a></p>
+    </div>
+  </footer>
+
+  <script src="/js/main.js"></script>
+</body>
+</html>
