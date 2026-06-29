@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Apple Container Stack Templates — Nginx+Node, Python+PostgreSQL</title>
+  <meta name="description" content="Ready-to-use Apple Container stack templates. Nginx+Node.js and Python+PostgreSQL — Docker Compose original and converted Apple Container version.">
+  <meta property="og:title" content="Apple Container Stack Templates — Nginx+Node, Python+PostgreSQL">
+  <meta property="og:description" content="Ready-to-use Apple Container stack templates. Docker Compose original and converted Apple Container version included.">
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="https://maccontainer.dev/stack-templates/">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Apple Container Stack Templates — Nginx+Node, Python+PostgreSQL">
+  <meta name="twitter:description" content="Ready-to-use Apple Container stack templates with Docker-to-Apple-Container conversion.">
+  <link rel="stylesheet" href="/css/style.css">
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+  <link rel="canonical" href="https://maccontainer.dev/stack-templates/">
+</head>
+<body>
+  <nav class="nav">
+    <div class="nav-inner">
+      <a href="/" class="nav-logo"><span>&#9670;</span> MacContainer.dev</a>
+      <ul class="nav-links" id="nav-links">
+        <li><a href="/">Home</a></li>
+        <li><a href="/installation/">Installation</a></li>
+        <li><a href="/compose-alternative/">Compose Alt</a></li>
+        <li><a href="/stack-templates/">Stacks</a></li>
+        <li><a href="/production-guide/">Manual</a></li>
+        <li><a href="/faq/">FAQ</a></li>
+      </ul>
+      <button class="nav-toggle" id="nav-toggle" aria-label="Toggle navigation">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </nav>
+
+  <main>
+    <section class="hero">
+      <div class="container">
+        <p class="hero-badge">Part 3 of 3</p>
+        <h1>Free Stack Templates</h1>
+        <p class="hero-subtitle">Two common web stacks, pre-converted from Docker Compose to Apple Container. Grab them, swap in your project, go.</p>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container">
+        <h2>Template 1: Nginx + Node.js</h2>
+        <p>A reverse proxy in front of an Express/Node.js API — the most common web stack pattern.</p>
+
+        <h3>Docker Compose (original)</h3>
+        <pre><code>services:
+  app:
+    image: node:22-alpine
+    working_dir: /app
+    volumes:
+      - ./src:/app/src
+      - ./package.json:/app/package.json
+    environment:
+      - PORT=3000
+      - NODE_ENV=production
+    command: node src/server.js
+
+  nginx:
+    image: nginx:alpine
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf
+    depends_on:
+      - app</code></pre>
+
+        <h3>Apple Container — start script</h3>
+        <pre><code>#!/bin/bash
+set -e
+DIR=$(cd "$(dirname "$0")" && pwd)
+
+container machine create node-stack 2>/dev/null || true
+
+container run --name node-app --machine node-stack \
+  --env PORT=3000 --env NODE_ENV=production \
+  --mount type=bind,src=$DIR/src,dst=/app/src \
+  --mount type=bind,src=$DIR/package.json,dst=/app/package.json \
+  node:22-alpine node src/server.js
+
+# Wait for Node to be ready
+until curl -s http://node-app.dev.internal:3000/health > /dev/null 2>&1; do
+  sleep 1
+done
+
+container run --name nginx-proxy --machine node-stack \
+  --mount type=bind,src=$DIR/nginx.conf,dst=/etc/nginx/nginx.conf \
+  nginx:alpine
+
+echo "Node app:  http://node-app.dev.internal:3000"
+echo "Via Nginx: http://nginx-proxy.dev.internal"</code></pre>
+
+        <h3>nginx.conf (identical for both Docker and Apple Container)</h3>
+        <pre><code>events { worker_connections 1024; }
+http {
+    server {
+        listen 80;
+        server_name _;
+
+        location / {
+            proxy_pass http://node-app.dev.internal:3000;
+            proxy_set_header Host $host;
+            proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        }
+    }
+}</code></pre>
+      </div>
+    </section>
+
+    <section class="section section-alt">
+      <div class="container">
+        <h2>Template 2: Python + PostgreSQL</h2>
+        <p>Django/FastAPI/Flask app with a PostgreSQL database — data persistence and inter-container networking.</p>
+
+        <h3>Docker Compose (original)</h3>
+        <pre><code>services:
+  db:
+    image: postgres:16-alpine
+    environment:
+      - POSTGRES_USER=app
+      - POSTGRES_PASSWORD=secret
+      - POSTGRES_DB=appdb
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+
+  web:
+    image: python:3.13-slim
+    working_dir: /app
+    environment:
+      - DATABASE_URL=postgresql://app:secret@db:5432/appdb
+    volumes:
+      - ./src:/app/src
+      - ./requirements.txt:/app/requirements.txt
+    command: uvicorn src.main:app --host 0.0.0.0 --port 8000
+    depends_on:
+      - db
+
+volumes:
+  pgdata:</code></pre>
+
+        <h3>Apple Container — start script</h3>
+        <pre><code>#!/bin/bash
+set -e
+DIR=$(cd "$(dirname "$0")" && pwd)
+
+PG_PASSWORD=secret
+
+container machine create python-stack 2>/dev/null || true
+
+# Create a named volume for PostgreSQL data
+container volume create pgdata 2>/dev/null || true
+
+container run --name postgres-db --machine python-stack \
+  --env POSTGRES_USER=app \
+  --env POSTGRES_PASSWORD=$PG_PASSWORD \
+  --env POSTGRES_DB=appdb \
+  --mount type=volume,src=pgdata,dst=/var/lib/postgresql/data \
+  postgres:16-alpine
+
+# Wait for PostgreSQL to accept connections
+until curl -s http://postgres-db.dev.internal:5432 > /dev/null 2>&1; do
+  sleep 1
+done
+
+container run --name python-web --machine python-stack \
+  --env "DATABASE_URL=postgresql://app:$PG_PASSWORD@postgres-db.dev.internal:5432/appdb" \
+  --mount type=bind,src=$DIR/src,dst=/app/src \
+  --mount type=bind,src=$DIR/requirements.txt,dst=/app/requirements.txt \
+  python:3.13-slim sh -c "pip install -r requirements.txt && uvicorn src.main:app --host 0.0.0.0 --port 8000"
+
+echo "API:      http://python-web.dev.internal:8000"
+echo "Postgres: http://postgres-db.dev.internal:5432"</code></pre>
+
+        <div class="note">
+          <strong>Key difference:</strong> In Docker Compose, containers reach each other by service name (<code>db:5432</code>). In Apple Container, they use the FQDN (<code>postgres-db.dev.internal:5432</code>). The connection string changes, but the behavior is identical.
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container" style="text-align:center;">
+        <h2>Need More Templates?</h2>
+        <p class="section-lead">The full manual includes 3 additional premium templates: Rails+Redis, Go+PostgreSQL, and a Microservices demo with 4 services.</p>
+        <p style="font-size:24px;font-weight:700;color:var(--accent);margin-bottom:20px;">$39 — Production Manual with 5 templates</p>
+        <a href="/production-guide/" class="btn btn-primary" style="font-size:17px;padding:14px 36px;">Get the Production Manual</a>
+        <p style="margin-top:12px;font-size:14px;color:var(--text-secondary);">Or start with the Migration Guide ($29) — 2 templates included.</p>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="container">
+      <p>MacContainer.dev — unofficial community guide. Not affiliated with Apple Inc.</p>
+      <p><a href="/privacy/" style="color:var(--text-secondary);">Privacy</a></p>
+    </div>
+  </footer>
+
+  <script src="/js/main.js"></script>
+</body>
+</html>
