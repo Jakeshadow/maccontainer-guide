@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pricing — Docker to Apple Container Migration Guide</title>
+  <meta name="description" content="Migration Guide $29, Production Manual $39. One-time purchase, no subscription. Free updates for Apple Container v1.x.">
+  <meta property="og:title" content="Pricing — Docker to Apple Container Migration Guide">
+  <meta property="og:description" content="Migration Guide $29, Production Manual $39. One-time purchase, no subscription.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://maccontainer.dev/pricing/">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Pricing — Docker to Apple Container Migration Guide">
+  <meta name="twitter:description" content="Migration Guide $29, Production Manual $39. One-time purchase.">
+  <link rel="stylesheet" href="/css/style.css">
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+  <link rel="canonical" href="https://maccontainer.dev/pricing/">
+  <script src="https://cdn.paddle.com/paddle/v2/paddle.js"></script>
+  <script>Paddle.Initialize({token:"live_cf42ca59e4e72ea4d4b9b9a6c8b9e8",environment:"production",checkout:{settings:{displayMode:"overlay",theme:"light",locale:"en"}}});</script>
+</head>
+<body>
+  <nav class="nav">
+    <div class="nav-inner">
+      <a href="/" class="nav-logo"><span>&#9670;</span> MacContainer.dev</a>
+      <ul class="nav-links" id="nav-links">
+        <li><a href="/">Home</a></li>
+        <li><a href="/installation/">Installation</a></li>
+        <li><a href="/compose-alternative/">Compose Alt</a></li>
+        <li><a href="/stack-templates/">Stacks</a></li>
+        <li><a href="/production-guide/">Manual</a></li>
+        <li><a href="/faq/">FAQ</a></li>
+      </ul>
+      <button class="nav-toggle" id="nav-toggle" aria-label="Toggle navigation">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </nav>
+
+  <main>
+    <section class="hero">
+      <div class="container">
+        <p class="hero-badge">One-Time Purchase</p>
+        <h1>Simple Pricing</h1>
+        <p class="hero-subtitle">Pay once. Use forever. Free updates for Apple Container v1.x.</p>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container">
+        <div class="compare-grid">
+          <div style="text-align:center;">
+            <h3>Migration Guide</h3>
+            <p style="font-size:32px;font-weight:700;color:var(--accent);margin:16px 0;">$29</p>
+            <ul style="text-align:left;margin-bottom:20px;">
+              <li>Chapters 1–5</li>
+              <li>2 stack templates</li>
+              <li>Conversion scripts</li>
+              <li>Docker command reference card</li>
+              <li>20-page PDF</li>
+            </ul>
+            <a href="#" class="btn btn-primary paddle-btn" data-price-id="pri_01jq1234567890" style="width:100%;text-align:center;">Buy — $29</a>
+          </div>
+          <div style="text-align:center;border:2px solid var(--accent);">
+            <p class="badge badge-green">Most Popular</p>
+            <h3>Production Manual</h3>
+            <p style="font-size:32px;font-weight:700;color:var(--accent);margin:16px 0;">$39</p>
+            <ul style="text-align:left;margin-bottom:20px;">
+              <li>All 8 chapters</li>
+              <li>5 stack templates</li>
+              <li>Conversion + health-check scripts</li>
+              <li>Production checklist (24 items)</li>
+              <li>Security &amp; networking chapter</li>
+              <li>40-page PDF</li>
+            </ul>
+            <a href="#" class="btn btn-primary paddle-btn" data-price-id="pri_01jq1234567891" style="width:100%;text-align:center;">Buy — $39</a>
+          </div>
+        </div>
+        <p style="text-align:center;font-size:14px;color:var(--text-secondary);margin-top:20px;">No subscription. No DRM. Export anytime. Both include free updates for Apple Container v1.x. Prices in USD.</p>
+      </div>
+    </section>
+
+    <section class="section section-alt">
+      <div class="container">
+        <h2 style="text-align:center;">Frequently Asked Pricing Questions</h2>
+        <div class="faq-list" style="margin-top:28px;">
+          <details class="faq-item"><summary>Can I upgrade from Migration Guide to Production Manual later?</summary><div class="faq-answer"><p>Not yet — but we're working on it. For now, if you think you'll need the production chapters, go with the Production Manual. The $10 difference saves you the cost of buying twice.</p></div></details>
+          <details class="faq-item"><summary>Do you offer team/enterprise pricing?</summary><div class="faq-answer"><p>For teams of 5+, contact us for bulk pricing. Each license is per-person — share the scripts within your team, but the manual is licensed per reader.</p></div></details>
+          <details class="faq-item"><summary>What happens when Apple Container v2.0 comes out?</summary><div class="faq-answer"><p>Free updates for all v1.x releases. If a major v2.0 breaks compatibility, we'll publish a new edition at a discounted upgrade price.</p></div></details>
+          <details class="faq-item"><summary>What's the refund policy?</summary><div class="faq-answer"><p>14-day money-back guarantee. If the manual doesn't help you migrate, email us for a full refund — no questions asked.</p></div></details>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="container">
+      <p>MacContainer.dev — unofficial community guide. Not affiliated with Apple Inc.</p>
+      <p><a href="/privacy/" style="color:var(--text-secondary);">Privacy</a></p>
+    </div>
+  </footer>
+
+  <script src="/js/main.js"></script>
+  <script>document.querySelectorAll('.paddle-btn').forEach(function(b){b.addEventListener('click',function(e){e.preventDefault();Paddle.Checkout.open({items:[{priceId:this.getAttribute('data-price-id'),quantity:1}]})})});</script>
+</body>
+</html>

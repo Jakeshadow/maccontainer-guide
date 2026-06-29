@@ -1,0 +1,2 @@
+# Domain redirects
+# https://maccontainer.dev/* -> https://maccontainer.dev/:splat 301
