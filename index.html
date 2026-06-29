@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Migrate from Docker to Apple Container — Free Guide | MacContainer.dev</title>
+  <meta name="description" content="Stop paying for Docker Desktop. Migrate to Apple Container step by step — compose alternative, stack templates, production setup. Free guide.">
+  <meta property="og:title" content="Migrate from Docker to Apple Container — Free Guide">
+  <meta property="og:description" content="Stop paying for Docker Desktop. Migrate to Apple Container step by step — compose alternative, stack templates, production setup.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://maccontainer.dev/">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Migrate from Docker to Apple Container — Free Guide">
+  <meta name="twitter:description" content="Stop paying for Docker Desktop. Migrate to Apple Container step by step — compose alternative, stack templates, production setup.">
+  <link rel="stylesheet" href="/css/style.css">
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+  <link rel="canonical" href="https://maccontainer.dev/">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    "name": "MacContainer.dev",
+    "url": "https://maccontainer.dev/",
+    "description": "Free guide to migrate from Docker Desktop to Apple Container on macOS."
+  }
+  </script>
+</head>
+<body>
+  <nav class="nav">
+    <div class="nav-inner">
+      <a href="/" class="nav-logo"><span>&#9670;</span> MacContainer.dev</a>
+      <ul class="nav-links" id="nav-links">
+        <li><a href="/">Home</a></li>
+        <li><a href="/installation/">Installation</a></li>
+        <li><a href="/compose-alternative/">Compose Alt</a></li>
+        <li><a href="/stack-templates/">Stacks</a></li>
+        <li><a href="/production-guide/">Manual</a></li>
+        <li><a href="/faq/">FAQ</a></li>
+      </ul>
+      <button class="nav-toggle" id="nav-toggle" aria-label="Toggle navigation">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </nav>
+
+  <main>
+    <section class="hero">
+      <div class="container">
+        <p class="hero-badge">Free Migration Guide</p>
+        <h1>Done Paying for Docker Desktop?</h1>
+        <p class="hero-subtitle">Apple Container is fast, native, and free. This guide shows you how to actually move — including the compose workaround nobody's written down.</p>
+        <div class="hero-actions">
+          <a href="/installation/" class="btn btn-primary">Start Migrating — Free</a>
+          <a href="/compose-alternative/" class="btn btn-outline">Compose Alternative &#8594;</a>
+        </div>
+        <div class="hero-stats">
+          <div class="hero-stat"><strong>43K+</strong> GitHub Stars</div>
+          <div class="hero-stat"><strong>&lt;1s</strong> Container Boot</div>
+          <div class="hero-stat"><strong>$0</strong> License Cost</div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container">
+        <h2>The Docker Desktop Problem</h2>
+        <p class="section-lead">Three pains every macOS developer knows.</p>
+        <div class="reasons-grid">
+          <div class="reason-card">
+            <h3>$150+/seat/year for 250+ employee companies</h3>
+            <p>Docker Desktop licensing went paid. If your org has 250+ employees, you're paying per seat. Apple Container is free — Apple-built, MIT-licensed, zero recurring cost.</p>
+          </div>
+          <div class="reason-card">
+            <h3>Resource-hungry VM that never rests</h3>
+            <p>Docker Desktop runs a Linux VM that consumes RAM even when idle. Apple Container uses macOS Virtualization.framework — each container is a lightweight VM booting in under 1 second, only using resources when it's running.</p>
+          </div>
+          <div class="reason-card">
+            <h3>Frequent update interruptions</h3>
+            <p>"Update Docker Desktop now" — the notification macOS developers dread. Apple Container updates come through macOS system updates. No separate updater, no forced restarts.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section section-alt">
+      <div class="container">
+        <h2>Apple Container: What It Actually Is</h2>
+        <p class="section-lead">OCI-compatible. Apple Silicon native. Built into macOS 26.</p>
+        <div class="compare-grid">
+          <div>
+            <h3>Docker Desktop</h3>
+            <ul>
+              <li>Runs inside a Linux VM</li>
+              <li>Proprietary license (paid for enterprises)</li>
+              <li>Separate installer and updater</li>
+              <li>compose built in</li>
+              <li>Port mapping required</li>
+              <li>Works on Intel + Apple Silicon</li>
+            </ul>
+          </div>
+          <div>
+            <h3>Apple Container</h3>
+            <ul>
+              <li>Native Virtualization.framework — no Linux VM overhead</li>
+              <li>Open source, free for everyone</li>
+              <li>Built into macOS — updated with the OS</li>
+              <li>Compose not yet supported (we have a workaround &#8594;)</li>
+              <li>Each container gets its own IP — no port mapping needed</li>
+              <li>Apple Silicon only (M1/M2/M3/M4)</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container">
+        <h2>The Compose Problem — Solved</h2>
+        <p class="section-lead">Yes, compose is missing. No, it's not a dealbreaker.</p>
+        <p>GitHub issues #55 and #186 are the most-requested features for Apple Container. Every YouTube video ends with "not ready yet." But Container Machines (shipped in v1.0) combined with a shell script and DNS configuration gives you the same result — multi-container orchestration without compose. <strong>We wrote the conversion template so you don't have to figure it out from scratch.</strong></p>
+        <div class="note">
+          <strong>&#8594; <a href="/compose-alternative/">See the compose alternative in action</a></strong> — docker-compose.yml &#8594; Container Machines, step by step with a working example.
+        </div>
+      </div>
+    </section>
+
+    <section class="section section-alt">
+      <div class="container">
+        <h2>3 Steps to Migrate</h2>
+        <div class="reasons-grid">
+          <div class="reason-card">
+            <h3>1. Install &amp; Run Your First Container</h3>
+            <p>Brew install, system start, pull an image, run it. You'll have a working container in 10 minutes. Follow along with the exact commands.</p>
+            <p><a href="/installation/">Start here &#8594;</a></p>
+          </div>
+          <div class="reason-card">
+            <h3>2. Convert Your Multi-Container Setup</h3>
+            <p>The part everyone gets stuck on. Take your docker-compose.yml and convert it to Container Machines + a shell script. We show you the mapping for volumes, networks, and inter-container DNS.</p>
+            <p><a href="/compose-alternative/">Compose alternative &#8594;</a></p>
+          </div>
+          <div class="reason-card">
+            <h3>3. Grab the Stack Templates &amp; Go</h3>
+            <p>Pre-built templates for Nginx+Node and Python+PostgreSQL — just swap in your project. Plus production hardening (launchd, TLS, monitoring) in the full manual.</p>
+            <p><a href="/stack-templates/">Browse templates &#8594;</a></p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container" style="text-align:center;">
+        <h2>Ready to Stop Paying?</h2>
+        <p class="section-lead">Migration Guide: everything above, in one PDF, with conversion scripts and 2 stack templates.</p>
+        <p style="font-size:24px;font-weight:700;color:var(--accent);margin-bottom:20px;">$29 — one-time, no subscription</p>
+        <a href="/production-guide/" class="btn btn-primary" style="font-size:17px;padding:14px 36px;">Get the Migration Guide</a>
+        <p style="margin-top:12px;font-size:14px;color:var(--text-secondary);">Free preview on this site. Manual adds PDF + conversion scripts + production checklist.</p>
+      </div>
+    </section>
+
+    <section class="section section-alt">
+      <div class="container">
+        <h2>Quick FAQ</h2>
+        <div class="faq-list">
+          <details class="faq-item">
+            <summary>Does Apple Container replace Docker completely?</summary>
+            <div class="faq-answer">
+              <p>For macOS developers on Apple Silicon running macOS 26+, yes — with the compose workaround described on this site. If you need x86 containers or cross-platform CI, keep Docker around for those specific use cases. Many teams run both side by side during migration.</p>
+            </div>
+          </details>
+          <details class="faq-item">
+            <summary>Is Apple Container faster than Docker Desktop?</summary>
+            <div class="faq-answer">
+              <p>Container startup is noticeably faster (&lt;1s vs 3-5s for Docker Desktop on macOS) because Apple Container skips the Linux VM layer. I/O performance is also better for bind-mounted volumes since it uses native APFS. Network throughput is comparable.</p>
+            </div>
+          </details>
+          <details class="faq-item">
+            <summary>When will Apple officially support compose?</summary>
+            <div class="faq-answer">
+              <p>Apple hasn't announced a timeline. The docker/compose repo has an open issue (#12934) requesting support, and the Apple Container team is aware. Until then, this site's Container Machines + shell script approach is the working solution.</p>
+            </div>
+          </details>
+        </div>
+        <p style="text-align:center;margin-top:20px;"><a href="/faq/">View all FAQs &#8594;</a></p>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="container">
+      <p>MacContainer.dev — unofficial community guide. Not affiliated with Apple Inc.</p>
+      <p><a href="/privacy/" style="color:var(--text-secondary);">Privacy</a></p>
+    </div>
+  </footer>
+
+  <script src="/js/main.js"></script>
+</body>
+</html>
