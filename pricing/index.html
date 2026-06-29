@@ -4,19 +4,32 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Pricing — Docker to Apple Container Migration Guide</title>
-  <meta name="description" content="Migration Guide $29, Production Manual $39. One-time purchase, no subscription. Free updates for Apple Container v1.x.">
+  <meta name="description" content="Complete Migration Manual — $29 one-time. 8 chapters, 40-page PDF, 5 stack templates. Launch special: $10 off at checkout.">
   <meta property="og:title" content="Pricing — Docker to Apple Container Migration Guide">
-  <meta property="og:description" content="Migration Guide $29, Production Manual $39. One-time purchase, no subscription.">
+  <meta property="og:description" content="Complete Migration Manual — $29 one-time. $10 off at checkout.">
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://maccontainer.dev/pricing/">
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="Pricing — Docker to Apple Container Migration Guide">
-  <meta name="twitter:description" content="Migration Guide $29, Production Manual $39. One-time purchase.">
+  <meta name="twitter:description" content="Complete Migration Manual — $29 one-time. $10 off at checkout.">
   <link rel="stylesheet" href="/css/style.css">
   <link rel="icon" type="image/svg+xml" href="/favicon.svg">
   <link rel="canonical" href="https://maccontainer.dev/pricing/">
   <script src="https://cdn.paddle.com/paddle/v2/paddle.js"></script>
-  <script>Paddle.Initialize({token:"live_cf42ca59e4e72ea4d4b9b9a6c8b9e8",environment:"production",checkout:{settings:{displayMode:"overlay",theme:"light",locale:"en"}}});</script>
+  <script>
+    Paddle.Initialize({
+      token: "live_ac20e72a72c5af23043c2b394ed",
+      environment: "production",
+      checkout: {
+        settings: {
+          displayMode: "overlay",
+          theme: "light",
+          locale: "en",
+          successUrl: "https://maccontainer.dev/thanks/?_ptxn={transaction_id}"
+        }
+      }
+    });
+  </script>
 </head>
 <body>
   <nav class="nav">
@@ -46,47 +59,55 @@
     </section>
 
     <section class="section">
-      <div class="container">
-        <div class="compare-grid">
-          <div style="text-align:center;">
-            <h3>Migration Guide</h3>
-            <p style="font-size:32px;font-weight:700;color:var(--accent);margin:16px 0;">$29</p>
-            <ul style="text-align:left;margin-bottom:20px;">
-              <li>Chapters 1–5</li>
-              <li>2 stack templates</li>
-              <li>Conversion scripts</li>
-              <li>Docker command reference card</li>
-              <li>20-page PDF</li>
-            </ul>
-            <a href="#" class="btn btn-primary paddle-btn" data-price-id="pri_01jq1234567890" style="width:100%;text-align:center;">Buy — $29</a>
-          </div>
-          <div style="text-align:center;border:2px solid var(--accent);">
-            <p class="badge badge-green">Most Popular</p>
-            <h3>Production Manual</h3>
-            <p style="font-size:32px;font-weight:700;color:var(--accent);margin:16px 0;">$39</p>
-            <ul style="text-align:left;margin-bottom:20px;">
-              <li>All 8 chapters</li>
-              <li>5 stack templates</li>
-              <li>Conversion + health-check scripts</li>
-              <li>Production checklist (24 items)</li>
-              <li>Security &amp; networking chapter</li>
-              <li>40-page PDF</li>
-            </ul>
-            <a href="#" class="btn btn-primary paddle-btn" data-price-id="pri_01jq1234567891" style="width:100%;text-align:center;">Buy — $39</a>
-          </div>
+      <div class="container" style="text-align:center;">
+        <div style="display:inline-block;text-align:center;border:2px solid var(--accent);border-radius:12px;padding:36px 48px;">
+          <p class="badge badge-green" style="margin-bottom:8px;">Launch Special</p>
+          <h2 style="font-size:1.25rem;margin-bottom:4px;">Complete Migration Manual</h2>
+          <p style="color:var(--text-secondary);font-size:.93rem;">8 chapters, 40-page PDF, 5 stack templates, conversion scripts</p>
+          <p style="font-size:32px;font-weight:700;color:var(--accent);margin:16px 0;">$29</p>
+          <p style="color:var(--text-secondary);font-size:.95rem;margin-bottom:24px;">$10 off applied at checkout — you pay $19.<br>One-time. Lifetime updates. No DRM.</p>
+          <button class="btn btn-primary paddle-btn" data-price-id="pri_01kwa688rn0ec98phj2tqgw2yr" style="font-size:17px;padding:14px 48px;">Get the Manual</button>
+          <p style="font-size:.9rem;color:var(--accent);font-weight:500;margin-top:16px;">&#128274; 30-day money-back guarantee &mdash; try it risk-free, full refund if it doesn&rsquo;t save you time.</p>
         </div>
-        <p style="text-align:center;font-size:14px;color:var(--text-secondary);margin-top:20px;">No subscription. No DRM. Export anytime. Both include free updates for Apple Container v1.x. Prices in USD.</p>
       </div>
     </section>
 
     <section class="section section-alt">
       <div class="container">
-        <h2 style="text-align:center;">Frequently Asked Pricing Questions</h2>
+        <h2 style="text-align:center;">What's Included</h2>
+        <div class="table-wrap" style="margin-top:28px;">
+          <table>
+            <thead>
+              <tr><th>Chapter</th><th>Topic</th></tr>
+            </thead>
+            <tbody>
+              <tr><td><strong>1.</strong></td><td>Installation &amp; First Container</td></tr>
+              <tr><td><strong>2.</strong></td><td>Single Container Migration</td></tr>
+              <tr><td><strong>3.</strong></td><td>Compose Alternative</td></tr>
+              <tr><td><strong>4.</strong></td><td>Stack Templates (5 pre-converted stacks)</td></tr>
+              <tr><td><strong>5.</strong></td><td>Named Volumes &amp; Data</td></tr>
+              <tr><td><strong>6.</strong></td><td>Production Hardening</td></tr>
+              <tr><td><strong>7.</strong></td><td>Security &amp; Networking</td></tr>
+              <tr><td><strong>8.</strong></td><td>Troubleshooting &amp; Tuning</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <ul style="margin-top:20px;">
+          <li><strong>conversion-scripts.zip</strong> — Shell scripts for all 5 stacks</li>
+          <li><strong>Production checklist</strong> — 24-item pre-launch checklist</li>
+          <li><strong>Docker-to-Apple Container command reference card</strong> — one-page PDF cheat sheet</li>
+        </ul>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container">
+        <h2 style="text-align:center;">Frequently Asked Questions</h2>
         <div class="faq-list" style="margin-top:28px;">
-          <details class="faq-item"><summary>Can I upgrade from Migration Guide to Production Manual later?</summary><div class="faq-answer"><p>Not yet — but we're working on it. For now, if you think you'll need the production chapters, go with the Production Manual. The $10 difference saves you the cost of buying twice.</p></div></details>
+          <details class="faq-item"><summary>What's the refund policy?</summary><div class="faq-answer"><p><strong>30-day money-back guarantee.</strong> If the manual doesn't help you migrate, email us for a full refund — no questions asked. You can also self-serve via the <a href="https://customer-portal.paddle.com/cpl_01ktyfrh42qnkmgvx3gxm1y03g" target="_blank" rel="noopener">Paddle customer portal</a>. <a href="/refunds/">Full refund details &rarr;</a></p></div></details>
           <details class="faq-item"><summary>Do you offer team/enterprise pricing?</summary><div class="faq-answer"><p>For teams of 5+, contact us for bulk pricing. Each license is per-person — share the scripts within your team, but the manual is licensed per reader.</p></div></details>
           <details class="faq-item"><summary>What happens when Apple Container v2.0 comes out?</summary><div class="faq-answer"><p>Free updates for all v1.x releases. If a major v2.0 breaks compatibility, we'll publish a new edition at a discounted upgrade price.</p></div></details>
-          <details class="faq-item"><summary>What's the refund policy?</summary><div class="faq-answer"><p>14-day money-back guarantee. If the manual doesn't help you migrate, email us for a full refund — no questions asked.</p></div></details>
+          <details class="faq-item"><summary>How do I access my download after purchase?</summary><div class="faq-answer"><p>You get a download immediately after purchase. Returning buyers can access the download link from their order confirmation or the <a href="https://customer-portal.paddle.com/cpl_01ktyfrh42qnkmgvx3gxm1y03g" target="_blank" rel="noopener">Paddle customer portal</a>.</p></div></details>
         </div>
       </div>
     </section>
@@ -95,11 +116,22 @@
   <footer class="footer">
     <div class="container">
       <p>MacContainer.dev — unofficial community guide. Not affiliated with Apple Inc.</p>
-      <p><a href="/privacy/" style="color:var(--text-secondary);">Privacy</a></p>
+      <p><a href="/privacy/">Privacy Policy</a> &middot; <a href="/terms/">Terms of Service</a> &middot; <a href="/refunds/">Money-Back Guarantee</a></p>
     </div>
   </footer>
 
   <script src="/js/main.js"></script>
-  <script>document.querySelectorAll('.paddle-btn').forEach(function(b){b.addEventListener('click',function(e){e.preventDefault();Paddle.Checkout.open({items:[{priceId:this.getAttribute('data-price-id'),quantity:1}]})})});</script>
+  <script>
+    document.querySelectorAll('.paddle-btn').forEach(function(btn) {
+      btn.addEventListener('click', function(e) {
+        e.preventDefault();
+        var priceId = this.getAttribute('data-price-id');
+        Paddle.Checkout.open({
+          items: [{ priceId: priceId, quantity: 1 }],
+          discountId: 'dsc_01kwa69jtn87kshykrghqtebj2'
+        });
+      });
+    });
+  </script>
 </body>
 </html>

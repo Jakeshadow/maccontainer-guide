@@ -1,2 +1,1 @@
-# Domain redirects
-# https://maccontainer.dev/* -> https://maccontainer.dev/:splat 301
+/pricing/* /production-guide/:splat 301
