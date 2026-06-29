@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Compose Is Missing? Apple Container Multi-Container Setup That Works</title>
+  <meta name="description" content="Docker compose isn't available for Apple Container yet. Here's the working multi-container setup — Container Machines + conversion scripts + DNS config.">
+  <meta property="og:title" content="Compose Is Missing? Apple Container Multi-Container Setup That Works">
+  <meta property="og:description" content="Docker compose isn't available for Apple Container yet. Here's the working multi-container setup — Container Machines + conversion scripts + DNS config.">
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="https://maccontainer.dev/compose-alternative/">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Compose Is Missing? Apple Container Multi-Container Setup That Works">
+  <meta name="twitter:description" content="Docker compose isn't available for Apple Container yet. Here's the working solution.">
+  <link rel="stylesheet" href="/css/style.css">
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+  <link rel="canonical" href="https://maccontainer.dev/compose-alternative/">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "TechArticle",
+    "headline": "Apple Container Multi-Container Setup Without Docker Compose",
+    "description": "Working compose alternative for Apple Container using Container Machines, shell scripts, and DNS configuration.",
+    "proficiencyLevel": "Intermediate"
+  }
+  </script>
+</head>
+<body>
+  <nav class="nav">
+    <div class="nav-inner">
+      <a href="/" class="nav-logo"><span>&#9670;</span> MacContainer.dev</a>
+      <ul class="nav-links" id="nav-links">
+        <li><a href="/">Home</a></li>
+        <li><a href="/installation/">Installation</a></li>
+        <li><a href="/compose-alternative/">Compose Alt</a></li>
+        <li><a href="/stack-templates/">Stacks</a></li>
+        <li><a href="/production-guide/">Manual</a></li>
+        <li><a href="/faq/">FAQ</a></li>
+      </ul>
+      <button class="nav-toggle" id="nav-toggle" aria-label="Toggle navigation">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </nav>
+
+  <main>
+    <section class="hero">
+      <div class="container">
+        <p class="hero-badge">Part 2 of 3</p>
+        <h1>Compose Is Missing — Here's What Actually Works</h1>
+        <p class="hero-subtitle">Container Machines v1.0 + a shell script + DNS config = your multi-container setup, running. No compose required.</p>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container">
+        <h2>The Problem</h2>
+        <p>Docker Compose doesn't exist for Apple Container. GitHub issues <a href="https://github.com/apple/container/issues/55" target="_blank" rel="noopener">#55</a> and <a href="https://github.com/apple/container/issues/186" target="_blank" rel="noopener">#186</a> are the most-requested features. The docker/compose repo has an <a href="https://github.com/docker/compose/issues/12934" target="_blank" rel="noopener">open issue (#12934)</a> requesting Apple Container support.</p>
+        <p>Apple hasn't committed to a timeline. But <strong>you can run multi-container setups today</strong> using Container Machines — the v1.0 feature that most tutorials don't even mention.</p>
+      </div>
+    </section>
+
+    <section class="section section-alt">
+      <div class="container">
+        <h2>What Are Container Machines?</h2>
+        <p>Container Machines is Apple Container's built-in mechanism for grouping multiple containers. Think of it as a lightweight alternative to docker-compose: you define a group of containers, their images, mounts, environment variables, and networking — then start them all with one command.</p>
+        <p>A Container Machine is defined via CLI flags (v1.0) — no YAML file yet, but the structure maps cleanly from docker-compose. Here's the mapping:</p>
+
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr><th>docker-compose.yml</th><th>Container Machine</th></tr>
+            </thead>
+            <tbody>
+              <tr><td><code>services:</code></td><td>Containers within the machine group</td></tr>
+              <tr><td><code>image:</code></td><td><code>--image</code> flag per container</td></tr>
+              <tr><td><code>ports:</code></td><td>Not needed — each container has its own IP (no port mapping)</td></tr>
+              <tr><td><code>volumes:</code></td><td><code>--mount type=bind/volume,...</code> flag per container</td></tr>
+              <tr><td><code>environment:</code></td><td><code>--env KEY=val</code> flags per container</td></tr>
+              <tr><td><code>depends_on:</code></td><td>Shell script controls startup order</td></tr>
+              <tr><td><code>networks:</code></td><td>All containers in a machine share the DNS domain (<code>dev.internal</code>)</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container">
+        <h2>Real Example: Nginx + Node.js API</h2>
+        <p>Here's a typical web stack. We'll convert it from docker-compose to Apple Container.</p>
+
+        <h3>Original docker-compose.yml</h3>
+        <pre><code>version: '3'
+services:
+  api:
+    image: myapp-api:latest
+    environment:
+      - PORT=3000
+      - NODE_ENV=production
+    volumes:
+      - ./src:/app/src
+    ports:
+      - "3000:3000"
+
+  nginx:
+    image: nginx:latest
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf
+    ports:
+      - "80:80"
+    depends_on:
+      - api</code></pre>
+
+        <h3>Step 1: Start Both Containers in a Machine Group</h3>
+        <pre><code># Create and start the machine group
+container machine create web-stack
+
+# Start the API container
+container run --name api --machine web-stack \
+  --env PORT=3000 --env NODE_ENV=production \
+  --mount type=bind,src=$(pwd)/src,dst=/app/src \
+  myapp-api:latest
+
+# Start the Nginx container
+container run --name nginx --machine web-stack \
+  --mount type=bind,src=$(pwd)/nginx.conf,dst=/etc/nginx/nginx.conf \
+  nginx:latest</code></pre>
+
+        <h3>Step 2: Configure nginx.conf for Inter-Container Routing</h3>
+        <pre><code># nginx.conf — proxy to the API container via DNS
+server {
+    listen 80;
+    server_name _;
+
+    location / {
+        proxy_pass http://api.dev.internal:3000;
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+    }
+}</code></pre>
+
+        <div class="note">
+          <strong>Why this works:</strong> Both containers are in the <code>web-stack</code> machine group and share the <code>dev.internal</code> DNS domain. Nginx reaches the API container at <code>api.dev.internal:3000</code> — no port mapping needed. Each container has its own IP on the virtual network.
+        </div>
+      </div>
+    </section>
+
+    <section class="section section-alt">
+      <div class="container">
+        <h2>Step 3: Automate With a Shell Script</h2>
+        <p>Wrap the commands in a script that handles startup order — this is your compose replacement:</p>
+        <pre><code>#!/bin/bash
+# start-stack.sh — Launch the web-stack machine group
+set -e
+
+echo "==> Creating machine group: web-stack"
+container machine create web-stack 2>/dev/null || true
+
+echo "==> Starting API container"
+container run --name api --machine web-stack \
+  --env PORT=3000 --env NODE_ENV=production \
+  --mount type=bind,src=$(pwd)/src,dst=/app/src \
+  myapp-api:latest
+
+echo "==> Waiting for API to be ready"
+sleep 3
+
+echo "==> Starting Nginx container"
+container run --name nginx --machine web-stack \
+  --mount type=bind,src=$(pwd)/nginx.conf,dst=/etc/nginx/nginx.conf \
+  nginx:latest
+
+echo "==> Stack running. Check status:"
+container machine status web-stack
+
+echo "API:    http://api.dev.internal:3000"
+echo "Nginx:  http://nginx.dev.internal"</code></pre>
+
+        <p>Make it executable and run:</p>
+        <pre><code>chmod +x start-stack.sh
+./start-stack.sh</code></pre>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container">
+        <h2>Step 4: Verify Everything Works</h2>
+        <pre><code># Check all containers in the machine group
+container machine status web-stack
+
+# Output should show:
+# MACHINE     CONTAINER   STATUS    IP
+# web-stack   api         running   10.0.0.2
+# web-stack   nginx       running   10.0.0.3
+
+# Test the API directly
+curl http://api.dev.internal:3000
+
+# Test via Nginx
+curl http://nginx.dev.internal</code></pre>
+
+        <p>If both return expected responses, you've just replaced docker-compose with a working multi-container Apple Container setup.</p>
+      </div>
+    </section>
+
+    <section class="section section-alt">
+      <div class="container">
+        <h2>Caveats &amp; Limitations</h2>
+        <div class="limitations-grid">
+          <div class="limit-card">
+            <h4>No healthcheck built-in</h4>
+            <p>docker-compose has <code>healthcheck:</code>. With Container Machines, add a polling loop in your start script (e.g., <code>until curl -s http://api.dev.internal:3000/health; do sleep 1; done</code>).</p>
+          </div>
+          <div class="limit-card">
+            <h4>Startup order is manual</h4>
+            <p><code>depends_on</code> doesn't exist. Your shell script controls order — sleep durations or polling loops are your friend. The full manual includes robust health-check wrappers.</p>
+          </div>
+          <div class="limit-card">
+            <h4>No YAML config</h4>
+            <p>v1.0 is CLI-only. No declarative config file. Keep your startup script in version control — it <em>is</em> your config. A YAML parser may come in a future Apple Container release.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container" style="text-align:center;">
+        <h2>Want the Full Migration Manual?</h2>
+        <p class="section-lead">The compose alternative above works, but it's the tip of the iceberg. The manual covers production hardening, 5 stack templates, and the conversion script pack.</p>
+        <a href="/production-guide/" class="btn btn-primary" style="font-size:17px;padding:14px 36px;">Get the Complete Manual — $29</a>
+        <p style="margin-top:16px;"><a href="/stack-templates/">Or browse free stack templates first &#8594;</a></p>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="container">
+      <p>MacContainer.dev — unofficial community guide. Not affiliated with Apple Inc.</p>
+      <p><a href="/privacy/" style="color:var(--text-secondary);">Privacy</a></p>
+    </div>
+  </footer>
+
+  <script src="/js/main.js"></script>
+</body>
+</html>
