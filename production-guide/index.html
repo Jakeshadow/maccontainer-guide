@@ -75,14 +75,14 @@
               <tr><th>Ch</th><th>What You'll Learn</th></tr>
             </thead>
             <tbody>
-              <tr><td><strong>1.</strong></td><td><strong>Installation & First Container</strong> — Brew install, system start, DNS config. Zero to running in 10 minutes.</td></tr>
+              <tr><td><strong>1.</strong></td><td><strong>Installation & First Container</strong> — 14 edge cases covered: macOS 15 networking limits, kernel download failures, Local Network permissions (<a href="https://github.com/apple/container/issues/1802" target="_blank" rel="noopener">#1802</a>), app-root crashes. Not just the happy path.</td></tr>
               <tr><td><strong>2.</strong></td><td><strong>Single Container Migration</strong> — Docker → Apple Container command mapping, network/DNS, volume types, env vars.</td></tr>
               <tr><td><strong>3.</strong></td><td><strong>Compose Alternative</strong> — Container Machines deep dive, docker-compose.yml → conversion scripts, inter-container DNS, health checks.</td></tr>
               <tr><td><strong>4.</strong></td><td><strong>5 Stack Templates</strong> — Nginx+Node, Python+PostgreSQL, Rails+Redis, Go+PostgreSQL, Microservices (4-service demo).</td></tr>
-              <tr><td><strong>5.</strong></td><td><strong>Named Volumes & Data</strong> — Backup/restore strategies, bind mount vs named volume, PostgreSQL data migration.</td></tr>
-              <tr><td><strong>6.</strong></td><td><strong>Production Hardening</strong> — launchd auto-start, TLS with nginx, resource limits, log rotation, monitoring hooks.</td></tr>
+              <tr><td><strong>5.</strong></td><td><strong>Named Volumes & Data</strong> — Backup strategies for PostgreSQL, MySQL, Redis. How to prune snapshots that consume 500&nbsp;GB+ without warning (<a href="https://github.com/apple/container/issues/784" target="_blank" rel="noopener">GitHub #784</a>). Migrating Docker named volumes without data loss.</td></tr>
+              <tr><td><strong>6.</strong></td><td><strong>Production Hardening</strong> — launchd auto-start that survives reboots (Apple Container doesn't do this natively — <a href="https://github.com/apple/container/issues/158" target="_blank" rel="noopener">GitHub #158</a>). TLS with nginx + Let's Encrypt. Resource limits for the per-VM architecture. Log rotation that won't fill your disk.</td></tr>
               <tr><td><strong>7.</strong></td><td><strong>Security & Networking</strong> — Network isolation, VPN-friendly DNS, private registry, secrets without Swarm.</td></tr>
-              <tr><td><strong>8.</strong></td><td><strong>Troubleshooting & Tuning</strong> — Common errors + fixes, I/O tuning, VM memory, upgrade strategy.</td></tr>
+              <tr><td><strong>8.</strong></td><td><strong>Troubleshooting & Tuning</strong> — DNS resolution failures (<a href="https://github.com/apple/container/issues/1693" target="_blank" rel="noopener">#1693</a>, <a href="https://github.com/apple/container/issues/856" target="_blank" rel="noopener">#856</a>), inter-container communication breakage, x86 image workarounds, 20+ error messages with verified fixes.</td></tr>
             </tbody>
           </table>
         </div>
