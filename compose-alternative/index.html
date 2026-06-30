@@ -12,7 +12,13 @@
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="Compose Is Missing? Apple Container Multi-Container Setup That Works">
   <meta name="twitter:description" content="Docker compose isn't available for Apple Container yet. Here's the working solution.">
-  <link rel="stylesheet" href="/css/style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Google+Sans:wght@400;500;700&family=Roboto:wght@300;400;500;700&family=Roboto+Mono:wght@400;500&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
+  <noscript><link href="https://fonts.googleapis.com/css2?family=Google+Sans:wght@400;500;700&family=Roboto:wght@300;400;500;700&family=Roboto+Mono:wght@400;500&display=swap" rel="stylesheet"></noscript>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css" rel="stylesheet" media="print" onload="this.media='all'">
+  <noscript><link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css" rel="stylesheet"></noscript>
+  <link rel="stylesheet" href="/css/style.css?v=2">
   <link rel="icon" type="image/svg+xml" href="/favicon.svg">
   <link rel="canonical" href="https://maccontainer.dev/compose-alternative/">
   <script type="application/ld+json">
@@ -28,14 +34,13 @@
 <body>
   <nav class="nav">
     <div class="nav-inner">
-      <a href="/" class="nav-logo"><span>&#9670;</span> MacContainer.dev</a>
+      <a href="/" class="nav-logo"><svg width="28" height="28" viewBox="0 0 100 100"><rect fill="#007AFF" width="100" height="100" rx="22"/><text x="50" y="68" text-anchor="middle" fill="white" font-size="56" font-family="sans-serif" font-weight="bold">AC</text></svg>MacContainer.dev</a>
       <ul class="nav-links" id="nav-links">
         <li><a href="/">Home</a></li>
         <li><a href="/installation/">Installation</a></li>
         <li><a href="/compose-alternative/">Compose Alt</a></li>
         <li><a href="/stack-templates/">Stacks</a></li>
-        <li><a href="/production-guide/">Manual</a></li>
-        <li><a href="/faq/">FAQ</a></li>
+        <li><a href="/production-guide/" class="nav-cta">Manual</a></li>
       </ul>
       <button class="nav-toggle" id="nav-toggle" aria-label="Toggle navigation">
         <span></span><span></span><span></span>
@@ -91,7 +96,7 @@
         <p>Here's a typical web stack. We'll convert it from docker-compose to Apple Container.</p>
 
         <h3>Original docker-compose.yml</h3>
-        <pre><code>version: '3'
+        <pre><code class="language-yaml">version: '3'
 services:
   api:
     image: myapp-api:latest
@@ -113,7 +118,7 @@ services:
       - api</code></pre>
 
         <h3>Step 1: Start Both Containers in a Machine Group</h3>
-        <pre><code># Create and start the machine group
+        <pre><code class="language-bash"># Create and start the machine group
 container machine create web-stack
 
 # Start the API container
@@ -128,7 +133,7 @@ container run --name nginx --machine web-stack \
   nginx:latest</code></pre>
 
         <h3>Step 2: Configure nginx.conf for Inter-Container Routing</h3>
-        <pre><code># nginx.conf — proxy to the API container via DNS
+        <pre><code class="language-bash"># nginx.conf — proxy to the API container via DNS
 server {
     listen 80;
     server_name _;
@@ -150,7 +155,7 @@ server {
       <div class="container">
         <h2>Step 3: Automate With a Shell Script</h2>
         <p>Wrap the commands in a script that handles startup order — this is your compose replacement:</p>
-        <pre><code>#!/bin/bash
+        <pre><code class="language-bash">#!/bin/bash
 # start-stack.sh — Launch the web-stack machine group
 set -e
 
@@ -178,7 +183,7 @@ echo "API:    http://api.dev.internal:3000"
 echo "Nginx:  http://nginx.dev.internal"</code></pre>
 
         <p>Make it executable and run:</p>
-        <pre><code>chmod +x start-stack.sh
+        <pre><code class="language-bash">chmod +x start-stack.sh
 ./start-stack.sh</code></pre>
       </div>
     </section>
@@ -186,7 +191,7 @@ echo "Nginx:  http://nginx.dev.internal"</code></pre>
     <section class="section">
       <div class="container">
         <h2>Step 4: Verify Everything Works</h2>
-        <pre><code># Check all containers in the machine group
+        <pre><code class="language-bash"># Check all containers in the machine group
 container machine status web-stack
 
 # Output should show:
@@ -242,5 +247,8 @@ curl http://nginx.dev.internal</code></pre>
   </footer>
 
   <script src="/js/main.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-bash.min.js" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-yaml.min.js" defer></script>
 </body>
 </html>

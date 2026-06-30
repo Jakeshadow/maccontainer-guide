@@ -5,6 +5,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>The Complete Docker→Apple Container Migration Manual — $19</title>
   <meta name="description" content="8 chapters, 40-page PDF, 5 stack templates, copy-paste conversion scripts. Move from Docker to Apple Container in hours, not weeks. One-time purchase, no subscription.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Google+Sans:wght@400;500;700&family=Roboto:wght@300;400;500;700&family=Roboto+Mono:wght@400;500&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
+  <noscript><link href="https://fonts.googleapis.com/css2?family=Google+Sans:wght@400;500;700&family=Roboto:wght@300;400;500;700&family=Roboto+Mono:wght@400;500&display=swap" rel="stylesheet"></noscript>
   <meta property="og:title" content="The Complete Docker→Apple Container Migration Manual — $19">
   <meta property="og:description" content="8 chapters, 40-page PDF, 5 stack templates, conversion scripts. One-time purchase.">
   <meta property="og:type" content="product">
@@ -12,7 +16,7 @@
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="The Complete Docker→Apple Container Migration Manual">
   <meta name="twitter:description" content="8 chapters, 40-page PDF, 5 stack templates. One-time purchase.">
-  <link rel="stylesheet" href="/css/style.css">
+  <link rel="stylesheet" href="/css/style.css?v=2">
   <link rel="icon" type="image/svg+xml" href="/favicon.svg">
   <link rel="canonical" href="https://maccontainer.dev/production-guide/">
   <script src="https://cdn.paddle.com/paddle/v2/paddle.js"></script>
@@ -34,14 +38,13 @@
 <body>
   <nav class="nav">
     <div class="nav-inner">
-      <a href="/" class="nav-logo"><span>&#9670;</span> MacContainer.dev</a>
+      <a href="/" class="nav-logo"><svg width="28" height="28" viewBox="0 0 100 100"><rect fill="#007AFF" width="100" height="100" rx="22"/><text x="50" y="68" text-anchor="middle" fill="white" font-size="56" font-family="sans-serif" font-weight="bold">AC</text></svg>MacContainer.dev</a>
       <ul class="nav-links" id="nav-links">
         <li><a href="/">Home</a></li>
         <li><a href="/installation/">Installation</a></li>
         <li><a href="/compose-alternative/">Compose Alt</a></li>
         <li><a href="/stack-templates/">Stacks</a></li>
-        <li><a href="/production-guide/">Manual</a></li>
-        <li><a href="/faq/">FAQ</a></li>
+        <li><a href="/production-guide/" class="nav-cta">Manual</a></li>
       </ul>
       <button class="nav-toggle" id="nav-toggle" aria-label="Toggle navigation">
         <span></span><span></span><span></span>
@@ -52,9 +55,9 @@
   <main>
     <section class="hero">
       <div class="container">
-        <p class="hero-badge">Complete Manual · 40 Pages</p>
-        <h1>The Docker&rarr;Apple Container Migration Manual</h1>
-        <p class="hero-subtitle">Every command, every template, every production hardening step — in one PDF with copy-paste scripts. Go from docker-compose to Apple Container in an afternoon.</p>
+        <p class="hero-badge">Complete Manual · 40 Pages · 8 Chapters</p>
+        <h1>Every Docker Command, Mapped. Every Template, Tested. Every Edge Case, Documented.</h1>
+        <p class="hero-subtitle">Go from docker-compose to Apple Container in an afternoon — with copy-paste scripts, 5 pre-converted stack templates, and a 24-item production checklist. Not theory. Working commands.</p>
         <div class="hero-actions">
           <a href="#pricing" class="btn btn-primary" style="font-size:17px;padding:14px 36px;">Get the Manual — $19</a>
           <a href="#contents" class="btn btn-outline">See What's Inside</a>
@@ -65,29 +68,39 @@
     <section class="section" id="contents">
       <div class="container">
         <h2>What's Inside</h2>
+        <p class="section-lead">Every chapter is a working migration step. Not documentation — conversion templates you copy, paste, and adapt.</p>
         <div class="table-wrap">
           <table>
             <thead>
-              <tr><th>Chapter</th><th>What You'll Learn</th></tr>
+              <tr><th>Ch</th><th>What You'll Learn</th></tr>
             </thead>
             <tbody>
-              <tr><td><strong>1.</strong> Installation &amp; First Container</td><td>Brew install, system start, DNS config, Docker command reference — from zero to running in 10 minutes</td></tr>
-              <tr><td><strong>2.</strong> Single Container Migration</td><td>Docker &rarr; Apple Container command mapping, network/DNS differences, volume types explained, env var handling</td></tr>
-              <tr><td><strong>3.</strong> Compose Alternative</td><td>Container Machines deep dive, docker-compose.yml &rarr; conversion scripts, inter-container DNS, health-check wrappers</td></tr>
-              <tr><td><strong>4.</strong> Stack Templates</td><td>5 pre-converted stacks: Nginx+Node, Python+PostgreSQL, Rails+Redis, Go+PostgreSQL, Microservices (4-service demo)</td></tr>
-              <tr><td><strong>5.</strong> Named Volumes &amp; Data</td><td>Volume backup/restore strategies, bind mount vs named volume tradeoffs, PostgreSQL data migration</td></tr>
-              <tr><td><strong>6.</strong> Production Hardening</td><td>launchd auto-start on boot, TLS termination with nginx, resource limits, log rotation, monitoring hooks</td></tr>
-              <tr><td><strong>7.</strong> Security &amp; Networking</td><td>Container network isolation, VPN-friendly DNS, private registry setup, secrets management without Swarm</td></tr>
-              <tr><td><strong>8.</strong> Troubleshooting &amp; Tuning</td><td>Common errors and fixes, I/O performance tuning, VM memory allocation, upgrade strategy</td></tr>
+              <tr><td><strong>1.</strong></td><td><strong>Installation & First Container</strong> — Brew install, system start, DNS config. Zero to running in 10 minutes.</td></tr>
+              <tr><td><strong>2.</strong></td><td><strong>Single Container Migration</strong> — Docker → Apple Container command mapping, network/DNS, volume types, env vars.</td></tr>
+              <tr><td><strong>3.</strong></td><td><strong>Compose Alternative</strong> — Container Machines deep dive, docker-compose.yml → conversion scripts, inter-container DNS, health checks.</td></tr>
+              <tr><td><strong>4.</strong></td><td><strong>5 Stack Templates</strong> — Nginx+Node, Python+PostgreSQL, Rails+Redis, Go+PostgreSQL, Microservices (4-service demo).</td></tr>
+              <tr><td><strong>5.</strong></td><td><strong>Named Volumes & Data</strong> — Backup/restore strategies, bind mount vs named volume, PostgreSQL data migration.</td></tr>
+              <tr><td><strong>6.</strong></td><td><strong>Production Hardening</strong> — launchd auto-start, TLS with nginx, resource limits, log rotation, monitoring hooks.</td></tr>
+              <tr><td><strong>7.</strong></td><td><strong>Security & Networking</strong> — Network isolation, VPN-friendly DNS, private registry, secrets without Swarm.</td></tr>
+              <tr><td><strong>8.</strong></td><td><strong>Troubleshooting & Tuning</strong> — Common errors + fixes, I/O tuning, VM memory, upgrade strategy.</td></tr>
             </tbody>
           </table>
         </div>
         <h3>Also Included</h3>
-        <ul>
-          <li><strong>conversion-scripts.zip</strong> — Ready-to-run shell scripts for all 5 stack templates</li>
-          <li><strong>Production checklist</strong> — 24-item pre-launch checklist (TLS, backup, monitoring, security)</li>
-          <li><strong>Docker-to-Apple Container command reference card</strong> — one-page PDF cheat sheet</li>
-        </ul>
+        <div class="reasons-grid">
+          <div class="reason-card">
+            <h3>conversion-scripts.zip</h3>
+            <p>Ready-to-run shell scripts for all 5 stack templates. Change 3 variables, run one command.</p>
+          </div>
+          <div class="reason-card">
+            <h3>Production Checklist</h3>
+            <p>24-item pre-launch list: TLS, backup, monitoring, security. Go live with confidence.</p>
+          </div>
+          <div class="reason-card">
+            <h3>Command Reference Card</h3>
+            <p>One-page PDF cheat sheet: every Docker command and its Apple Container equivalent.</p>
+          </div>
+        </div>
       </div>
     </section>
 
@@ -95,12 +108,12 @@
       <div class="container" style="text-align:center;">
         <h2>The Complete Manual</h2>
         <p class="section-lead">8 chapters, 40-page PDF, 5 stack templates, conversion scripts. One-time purchase. Free updates for Apple Container v1.x.</p>
-        <div style="display:inline-block;text-align:center;border:2px solid var(--accent);border-radius:12px;padding:36px 48px;margin-top:24px;">
-          <p class="badge badge-green" style="margin-bottom:8px;">Launch Special</p>
-          <p style="font-size:32px;font-weight:700;color:var(--accent);margin:16px 0;"><span style="text-decoration:line-through;color:var(--gray-500,#9aa0a6);font-size:1.8rem;font-weight:400;">$29</span> <span style="color:var(--google-green,#34A853);">$19</span></p>
-          <p style="color:var(--text-secondary);font-size:.95rem;margin-bottom:24px;">$10 off applied at checkout — you pay $19.<br>One-time. Lifetime updates. No DRM. <span style="color:var(--accent,#10b981);">· tax included</span></p>
-          <button class="btn btn-primary paddle-btn" data-price-id="pri_01kwa688rn0ec98phj2tqgw2yr" style="font-size:17px;padding:14px 48px;">Get the Manual</button>
-          <p style="font-size:.9rem;color:var(--accent);font-weight:500;margin-top:16px;">&#128274; 30-day money-back guarantee &mdash; try it risk-free, full refund if it doesn&rsquo;t save you time.</p>
+        <div class="price-block">
+          <p class="badge badge-green" style="margin-bottom:12px;">Launch Special — $10 Off</p>
+          <div class="price"><span style="text-decoration:line-through;color:var(--gray-500,#9aa0a6);font-size:1.8rem;font-weight:400;">$29</span> <span style="color:var(--google-green,#34A853);">$19</span></div>
+          <div class="price-note">$10 off applied at checkout. One-time. Lifetime updates. No DRM. <span style="color:var(--accent);">· tax included</span></div>
+          <button class="btn-buy paddle-btn" data-price-id="pri_01kwa688rn0ec98phj2tqgw2yr">Get the Manual — $19</button>
+          <p style="font-size:.9rem;color:var(--accent);font-weight:500;margin-top:16px;margin-bottom:0;">&#128274; 30-day money-back guarantee — try it risk-free, full refund if it doesn't save you time.</p>
         </div>
       </div>
     </section>
@@ -111,35 +124,35 @@
         <div class="usecases-grid">
           <div class="usecase-card">
             <h3>&#9989; macOS developers migrating from Docker</h3>
-            <p>You know Docker. You want the shortest path to Apple Container. This manual maps every Docker concept to its Apple Container equivalent.</p>
+            <p>You know Docker. You want the shortest path to Apple Container. Every Docker concept mapped to its Apple Container equivalent — commands, volumes, networks, env vars.</p>
           </div>
           <div class="usecase-card">
             <h3>&#9989; Teams evaluating Docker Desktop alternatives</h3>
-            <p>You need a production-grade migration plan. The manual covers TLS, backup, monitoring, and multi-service orchestration — not just hello-world.</p>
+            <p>You need a production-grade migration plan. TLS termination, backup strategies, multi-service orchestration, monitoring — not just hello-world.</p>
           </div>
           <div class="usecase-card">
             <h3>&#9989; Solo devs and homelabbers on Apple Silicon</h3>
-            <p>You run Plex, Home Assistant, or dev stacks on a Mac Mini/Mac Studio. The templates and conversion scripts save you hours of trial and error.</p>
+            <p>Plex, Home Assistant, dev stacks on a Mac Mini or Mac Studio. The templates and scripts save you hours of trial and error.</p>
           </div>
         </div>
 
         <h2 class="anti-title">What This Is Not</h2>
         <div class="anti-grid">
           <div class="anti-item">
-            <strong>Not for x86/Intel Mac users</strong>
+            <strong>Not for x86 / Intel Mac users</strong>
             <p>Apple Container requires Apple Silicon. Intel Macs are not supported.</p>
           </div>
           <div class="anti-item">
             <strong>Not for pre-macOS 26 users</strong>
-            <p>Requires macOS 26's Virtualization.framework. Older macOS versions can't run Apple Container.</p>
+            <p>Requires macOS 26 Virtualization.framework. Older versions can't run Apple Container.</p>
           </div>
           <div class="anti-item">
             <strong>Not a Docker-bashing manifesto</strong>
-            <p>Docker is excellent — especially on Linux. This guide is for macOS developers who choose to switch.</p>
+            <p>Docker is excellent — especially on Linux. This is for macOS devs who choose to switch.</p>
           </div>
           <div class="anti-item">
             <strong>Not a replacement for reading the source</strong>
-            <p>We link to apple/container GitHub throughout. This manual is a practical companion, not a substitute for understanding the tool.</p>
+            <p>We link to apple/container GitHub throughout. A practical companion, not a substitute.</p>
           </div>
         </div>
       </div>
@@ -147,9 +160,9 @@
 
     <section class="section section-alt">
       <div class="container" style="text-align:center;">
-        <h2>100% Free Preview on This Site</h2>
-        <p class="section-lead">Installation, compose alternative, and 2 stack templates are free. The manual adds production hardening, 3 more templates, and copy-paste scripts.</p>
-        <a href="/installation/" class="btn btn-outline">Start with the free guide &#8594;</a>
+        <h2>Free Preview on This Site</h2>
+        <p class="section-lead">Installation, compose alternative, and 2 stack templates are 100% free. Browse them before you buy.</p>
+        <a href="/installation/" class="btn btn-outline" style="font-size:16px;padding:12px 28px;">Start with the free guide →</a>
       </div>
     </section>
   </main>
@@ -157,7 +170,7 @@
   <footer class="footer">
     <div class="container">
       <p>MacContainer.dev — unofficial community guide. Not affiliated with Apple Inc.</p>
-      <p><a href="/privacy/" style="color:var(--text-secondary);">Privacy Policy</a> &middot; <a href="/terms/" style="color:var(--text-secondary);">Terms of Service</a> &middot; <a href="/refunds/" style="color:var(--text-secondary);">Money-Back Guarantee</a></p>
+      <p><a href="/privacy/">Privacy Policy</a> &middot; <a href="/terms/">Terms of Service</a> &middot; <a href="/refunds/">Money-Back Guarantee</a></p>
     </div>
   </footer>
 

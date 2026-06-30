@@ -12,21 +12,26 @@
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="Apple Container Setup — Install & Run First Container in 10 Minutes">
   <meta name="twitter:description" content="Install Apple Container on macOS 26, configure DNS, and run your first container.">
-  <link rel="stylesheet" href="/css/style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Google+Sans:wght@400;500;700&family=Roboto:wght@300;400;500;700&family=Roboto+Mono:wght@400;500&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
+  <noscript><link href="https://fonts.googleapis.com/css2?family=Google+Sans:wght@400;500;700&family=Roboto:wght@300;400;500;700&family=Roboto+Mono:wght@400;500&display=swap" rel="stylesheet"></noscript>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css" rel="stylesheet" media="print" onload="this.media='all'">
+  <noscript><link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css" rel="stylesheet"></noscript>
+  <link rel="stylesheet" href="/css/style.css?v=2">
   <link rel="icon" type="image/svg+xml" href="/favicon.svg">
   <link rel="canonical" href="https://maccontainer.dev/installation/">
 </head>
 <body>
   <nav class="nav">
     <div class="nav-inner">
-      <a href="/" class="nav-logo"><span>&#9670;</span> MacContainer.dev</a>
+      <a href="/" class="nav-logo"><svg width="28" height="28" viewBox="0 0 100 100"><rect fill="#007AFF" width="100" height="100" rx="22"/><text x="50" y="68" text-anchor="middle" fill="white" font-size="56" font-family="sans-serif" font-weight="bold">AC</text></svg>MacContainer.dev</a>
       <ul class="nav-links" id="nav-links">
         <li><a href="/">Home</a></li>
         <li><a href="/installation/">Installation</a></li>
         <li><a href="/compose-alternative/">Compose Alt</a></li>
         <li><a href="/stack-templates/">Stacks</a></li>
-        <li><a href="/production-guide/">Manual</a></li>
-        <li><a href="/faq/">FAQ</a></li>
+        <li><a href="/production-guide/" class="nav-cta">Manual</a></li>
       </ul>
       <button class="nav-toggle" id="nav-toggle" aria-label="Toggle navigation">
         <span></span><span></span><span></span>
@@ -71,9 +76,9 @@
     <section class="section section-alt">
       <div class="container">
         <h2>Step 1: Install Apple Container</h2>
-        <pre><code>brew install container</code></pre>
+        <pre><code class="language-bash">brew install container</code></pre>
         <p>This installs the <code>container</code> CLI. Verify with:</p>
-        <pre><code>container version</code></pre>
+        <pre><code class="language-bash">container version</code></pre>
         <p>Expected output: version string with build info. If you see <code>command not found</code>, restart your terminal or run <code>brew link container</code>.</p>
       </div>
     </section>
@@ -81,10 +86,10 @@
     <section class="section">
       <div class="container">
         <h2>Step 2: Start the Container System</h2>
-        <pre><code>container system start</code></pre>
+        <pre><code class="language-bash">container system start</code></pre>
         <p>This initializes the Virtualization.framework backend. You'll be prompted for your password once — Apple Container needs it to create VMs. After the first run, it starts automatically on login (configurable via <code>launchd</code>).</p>
         <p>Verify the system is running:</p>
-        <pre><code>container system status</code></pre>
+        <pre><code class="language-bash">container system status</code></pre>
       </div>
     </section>
 
@@ -92,7 +97,7 @@
       <div class="container">
         <h2>Step 3: Configure DNS</h2>
         <p>Apple Container uses its own DNS domain for inter-container communication. Set it once:</p>
-        <pre><code>container system property set dns.domain dev.internal</code></pre>
+        <pre><code class="language-bash">container system property set dns.domain dev.internal</code></pre>
         <p>This means containers can reach each other at <code>container-name.dev.internal</code> — no port mapping needed. Each container gets its own IP on the virtual network.</p>
         <div class="note">
           <strong>Key difference from Docker:</strong> No <code>-p 8080:80</code> port mapping. In Apple Container, each container has its own IP. You access it directly at <code>&lt;container-ip&gt;:80</code> or via DNS at <code>&lt;name&gt;.dev.internal:80</code>.
@@ -104,11 +109,11 @@
       <div class="container">
         <h2>Step 4: Pull and Run Your First Container</h2>
         <p>Pull an image from Docker Hub (OCI compatible):</p>
-        <pre><code>container pull nginx:latest</code></pre>
+        <pre><code class="language-bash">container pull nginx:latest</code></pre>
         <p>Run it:</p>
-        <pre><code>container run --name my-nginx nginx:latest</code></pre>
+        <pre><code class="language-bash">container run --name my-nginx nginx:latest</code></pre>
         <p>Check it's running:</p>
-        <pre><code>container ps
+        <pre><code class="language-bash">container ps
 CONTAINER ID   NAME       IMAGE          STATUS    IP
 abc123def456   my-nginx   nginx:latest   running   10.0.0.2</code></pre>
         <p>Access it at <code>http://10.0.0.2</code> or <code>http://my-nginx.dev.internal</code> — you should see the Nginx welcome page.</p>
@@ -158,5 +163,7 @@ abc123def456   my-nginx   nginx:latest   running   10.0.0.2</code></pre>
   </footer>
 
   <script src="/js/main.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-bash.min.js" defer></script>
 </body>
 </html>
