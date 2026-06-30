@@ -30,7 +30,12 @@
       {"@type":"Question","name":"Is Apple Container faster than Docker Desktop?","acceptedAnswer":{"@type":"Answer","text":"Container startup is noticeably faster (<1s vs 3-5s for Docker Desktop) because Apple Container skips the Linux VM layer. I/O throughput is better for bind-mounted volumes."}},
       {"@type":"Question","name":"When will Apple officially support Docker Compose?","acceptedAnswer":{"@type":"Answer","text":"Apple hasn't announced a timeline. Until then, Container Machines + shell scripts is the working solution documented on this site."}},
       {"@type":"Question","name":"Can I run x86 containers on Apple Container?","acceptedAnswer":{"@type":"Answer","text":"No. Apple Container is Apple Silicon only. x86 containers won't run. If you need x86 support, keep Docker Desktop alongside Apple Container."}},
-      {"@type":"Question","name":"How do I migrate data from Docker volumes?","acceptedAnswer":{"@type":"Answer","text":"Export from Docker (docker run --rm -v vol:/data -v $(pwd):/backup alpine cp -a /data /backup/), then bind-mount or create a named volume in Apple Container."}}
+      {"@type":"Question","name":"How do I migrate data from Docker volumes?","acceptedAnswer":{"@type":"Answer","text":"Export from Docker (docker run --rm -v vol:/data -v $(pwd):/backup alpine cp -a /data /backup/), then bind-mount or create a named volume in Apple Container."}},
+      {"@type":"Question","name":"Why does DNS sometimes work and sometimes not?","acceptedAnswer":{"@type":"Answer","text":"Known issue (#1693, #856). Apple Container's dev.internal domain loses resolution after restarts. Workarounds: scutil --dns check, recreate network, /etc/hosts fallback."}},
+      {"@type":"Question","name":"Why is Apple Container consuming 500GB of disk?","acceptedAnswer":{"@type":"Answer","text":"Snapshots and rootfs.ext4 files silently consume disk without user-initiated snapshots. Check with du -sh. The manual covers pruning and maintenance."}},
+      {"@type":"Question","name":"How do I make containers auto-start after reboot?","acceptedAnswer":{"@type":"Answer","text":"Apple Container doesn't auto-start natively. You need a launchd plist. The production manual covers launchd with health checks and failure recovery."}},
+      {"@type":"Question","name":"How long does a real migration take?","acceptedAnswer":{"@type":"Answer","text":"Single container: 10-15 min. 3-service compose stack: 1-2 hours. 5+ service stack: 2-4 hours with the manual, 4-8 hours without. Estimates include debugging time."}},
+      {"@type":"Question","name":"Is Apple Container really production-safe?","acceptedAnswer":{"@type":"Answer","text":"Each container runs in its own VM on Virtualization.framework — stronger isolation than Docker's shared-kernel model. But production readiness requires work Apple didn't document. The manual covers this."}}
     ]
   }
   </script>
@@ -90,13 +95,24 @@
           <details class="faq-item"><summary>How do I migrate my Docker volumes?</summary><div class="faq-answer"><p>Export from Docker first: <code>docker run --rm -v your_vol:/data -v $(pwd):/backup alpine cp -a /data /backup/</code>. Then bind-mount the backup into your Apple Container or create a new named volume and copy the data in. The manual includes step-by-step volume migration for PostgreSQL, MySQL, and Redis.</p></div></details>
           <details class="faq-item"><summary>Can I keep Docker Desktop installed while trying Apple Container?</summary><div class="faq-answer"><p>Yes. They coexist without conflict. Apple Container uses Virtualization.framework, Docker Desktop uses its own hypervisor. You can run containers on both simultaneously while testing the migration.</p></div></details>
         </div>
+
+        <h2 style="margin-top:40px;">Production Reality — The Hard Questions</h2>
+        <div class="faq-list">
+          <details class="faq-item"><summary>Why does DNS sometimes work and sometimes not?</summary><div class="faq-answer"><p>This is a known issue (<a href="https://github.com/apple/container/issues/1693" target="_blank" rel="noopener">GitHub #1693</a>, <a href="https://github.com/apple/container/issues/856" target="_blank" rel="noopener">#856</a>). Apple Container's DNS uses a <code>dev.internal</code> domain that sometimes loses resolution after restarts or network changes. Workarounds: (1) Check DNS config with <code>scutil --dns | grep containerization</code>, (2) Recreate your network with <code>container network create new-net</code> and re-attach containers, (3) Fallback: use <code>/etc/hosts</code> entries with container IPs (get IPs from <code>container ps</code>). The production manual covers 4 DNS troubleshooting patterns with exact commands.</p></div></details>
+          <details class="faq-item"><summary>Why is Apple Container consuming 500GB of disk?</summary><div class="faq-answer"><p>Snapshots and <code>rootfs.ext4</code> files can silently consume hundreds of GB without user-initiated snapshots (<a href="https://github.com/apple/container/issues/784" target="_blank" rel="noopener">GitHub #784</a>). Check disk usage: <code>du -sh ~/Library/Application Support/com.apple.container/</code>. The manual includes a maintenance section on pruning snapshots and managing disk consumption.</p></div></details>
+          <details class="faq-item"><summary>How do I make containers auto-start after reboot?</summary><div class="faq-answer"><p>Apple Container doesn't auto-start containers natively (<a href="https://github.com/apple/container/issues/158" target="_blank" rel="noopener">GitHub #158</a>). You need a launchd plist. Here's a basic example: create <code>~/Library/LaunchAgents/com.maccontainer.webstack.plist</code> with a RunAtLoad key pointing to your start script. The production manual covers launchd auto-start with health checks, startup ordering, and failure recovery — not just a basic plist.</p></div></details>
+          <details class="faq-item"><summary>How long does a real migration take?</summary><div class="faq-answer"><p>Single-container setup: 10–15 minutes. A 3-service docker-compose stack: 1–2 hours. A 5+ service stack with health checks, startup ordering, and persistent data: 2–4 hours with the manual (4–8 hours without). These estimates include debugging time. They don't include time reading GitHub issues.</p></div></details>
+          <details class="faq-item"><summary>Is Apple Container really production-safe?</summary><div class="faq-answer"><p>Each container runs in its own VM on Virtualization.framework — stronger isolation than Docker's shared-kernel model. But production readiness requires work Apple didn't document: TLS termination, network isolation, log rotation, auto-start, resource limits, backup strategies. The production manual covers all of these with tested configurations. Apple Container itself is solid; the gap is operational knowledge — which is exactly what the manual provides.</p></div></details>
+        </div>
       </div>
     </section>
 
     <section class="section section-alt">
       <div class="container" style="text-align:center;">
         <h2>Ready to Make the Switch?</h2>
+        <p class="section-lead" style="margin-bottom:24px;">The free guides cover installation. The manual covers everything that breaks — DNS, disk, auto-start, production hardening. $19, one-time, 30-day money-back guarantee.</p>
         <a href="/installation/" class="btn btn-primary">Start Migrating — Free &#8594;</a>
+        <p style="margin-top:16px;"><a href="/production-guide/" style="color:var(--accent);font-weight:500;">Or get the complete manual →</a></p>
       </div>
     </section>
   </main>
