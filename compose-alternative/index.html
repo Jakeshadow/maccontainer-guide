@@ -57,6 +57,17 @@
       </div>
     </section>
 
+    <section class="section section-alt">
+      <div class="container">
+        <h2>Compose Timeline &amp; Reality Check</h2>
+        <p>Apple has <strong>not announced a timeline</strong> for Docker Compose support. The docker/compose repo tracks this in <a href="https://github.com/docker/compose/issues/12934" target="_blank" rel="noopener">issue #12934</a>. Apple Container's own repo has <a href="https://github.com/apple/container/issues/55" target="_blank" rel="noopener">#55</a> and <a href="https://github.com/apple/container/issues/1846" target="_blank" rel="noopener">#1846</a> as its most-requested features — both still open with no official response.</p>
+        <p><strong>What this means for you:</strong> The Container Machines approach on this page is the working solution today. When compose arrives, your docker-compose.yml files will map directly — the shell scripts are a <strong>bridge, not permanent</strong>. The manual includes migration scripts designed to be replaced when compose lands, with comments marking what gets swapped out.</p>
+        <div class="note">
+          <strong>Don't want to maintain shell scripts forever?</strong> The <a href="/production-guide/">production manual</a> includes conversion scripts for 5 stacks with startup ordering, health checks, and error recovery — production-ready patterns that work today and are structured to be replaced by compose when it ships. <a href="/production-guide/">Get the manual →</a>
+        </div>
+      </div>
+    </section>
+
     <section class="section">
       <div class="container">
         <h2>The Problem</h2>
@@ -154,6 +165,13 @@ server {
     <section class="section section-alt">
       <div class="container">
         <h2>Step 3: Automate With a Shell Script</h2>
+        <div class="note">
+          <strong>&#9888;&#65039; Reality check:</strong> The <code>sleep 3</code> wait in the script below is a placeholder. In production, you need proper health checks. The manual covers 3 patterns:
+          <br><strong>1. HTTP health check:</strong> <code>until curl -s http://api.dev.internal:3000/health; do sleep 1; done</code>
+          <br><strong>2. TCP port check:</strong> <code>until nc -z api.dev.internal 3000; do sleep 1; done</code>
+          <br><strong>3. Container state polling:</strong> <code>until container ps --filter name=api --filter status=running | grep -q api; do sleep 1; done</code>
+          <br>The manual also covers container failure recovery — auto-restart, crash alerts, and startup ordering for 5+ service stacks. <a href="/production-guide/">See Chapter 6 →</a>
+        </div>
         <p>Wrap the commands in a script that handles startup order — this is your compose replacement:</p>
         <pre><code class="language-bash">#!/bin/bash
 # start-stack.sh — Launch the web-stack machine group
