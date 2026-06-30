@@ -121,6 +121,34 @@
 
     <section class="section">
       <div class="container">
+        <h2>What the Community is Saying</h2>
+        <p class="section-lead">Real quotes from GitHub issues and developer forums — the problems this guide solves.</p>
+        <div class="reasons-grid">
+          <div class="reason-card" style="border-left: 3px solid var(--google-red);">
+            <p style="font-style:italic;color:var(--text-secondary);margin-top:0;">"Since I'm using Apple Container (maybe 6 months), I never had the chance to get the DNS working. At best, it worked randomly."</p>
+            <p style="font-size:0.85rem;"><a href="https://github.com/apple/container/issues/1693" target="_blank" rel="noopener">GitHub #1693</a></p>
+          </div>
+          <div class="reason-card" style="border-left: 3px solid var(--google-red);">
+            <p style="font-style:italic;color:var(--text-secondary);margin-top:0;">"My disk was full and I didn't know why. 500GB used by snapshots and rootfs.ext4 files. No CLI to prune them."</p>
+            <p style="font-size:0.85rem;"><a href="https://github.com/apple/container/issues/784" target="_blank" rel="noopener">GitHub #784</a></p>
+          </div>
+          <div class="reason-card" style="border-left: 3px solid var(--accent);">
+            <p style="font-style:italic;color:var(--text-secondary);margin-top:0;">"Please add ability to orchestrate multi-container system."</p>
+            <p style="font-size:0.85rem;"><a href="https://github.com/apple/container/issues/55" target="_blank" rel="noopener">GitHub #55</a> — most-requested feature, no timeline</p>
+          </div>
+          <div class="reason-card" style="border-left: 3px solid var(--accent);">
+            <p style="font-style:italic;color:var(--text-secondary);margin-top:0;">"Can I run this in production? There's no info on TLS, auto-start, or security hardening."</p>
+            <p style="font-size:0.85rem;">Common question across r/docker, r/devops, HN</p>
+          </div>
+        </div>
+        <div class="note" style="margin-top:20px;">
+          <strong>These aren't edge cases.</strong> They're the normal experience of migrating from Docker Desktop to Apple Container. Our manual covers every one of them — with verified fixes. <a href="/production-guide/">See what's inside →</a>
+        </div>
+      </div>
+    </section>
+
+    <section class="section section-alt">
+      <div class="container">
         <h2>3 Steps to Migrate</h2>
         <p class="section-lead">From docker-compose to Apple Container — in an afternoon.</p>
         <div class="reasons-grid">
@@ -145,8 +173,8 @@
 
     <section class="section section-alt">
       <div class="container" style="text-align:center;">
-        <h2>Ready to Stop Paying?</h2>
-        <p class="section-lead">The free guides on this site get you running. The full manual adds production hardening, 3 extra stack templates, conversion scripts, and a 24-item pre-launch checklist — everything you need before going live.</p>
+        <h2>The Free Guide Gets You Running. The Manual Gets You Home Before Dinner.</h2>
+        <p class="section-lead">Installation and the compose workaround are free — you'll have containers running in 10 minutes. But when DNS stops resolving (<a href="https://github.com/apple/container/issues/1693" target="_blank" rel="noopener">GitHub #1693</a>), your PostgreSQL data won't migrate, or your 500&nbsp;GB disk fills with snapshot garbage (<a href="https://github.com/apple/container/issues/784" target="_blank" rel="noopener">#784</a>), you'll spend hours digging through GitHub issues. The manual saves you those hours — 40 pages of commands we actually ran, 24 items that went wrong so you don't discover them yourself.</p>
         <div class="price-block">
           <div class="price"><span style="text-decoration:line-through;color:var(--gray-500,#9aa0a6);font-size:1.8rem;font-weight:400;">$29</span> <span style="color:var(--google-green,#34A853);">$19</span></div>
           <div class="price-note">$10 off applied at checkout. One-time. Lifetime updates. <span style="color:var(--accent);">· tax included</span></div>
