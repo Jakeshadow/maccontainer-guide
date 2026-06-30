@@ -87,13 +87,52 @@
       <div class="container">
         <h2>Step 2: Start the Container System</h2>
         <pre><code class="language-bash">container system start</code></pre>
-        <p>This initializes the Virtualization.framework backend. You'll be prompted for your password once — Apple Container needs it to create VMs. After the first run, it starts automatically on login (configurable via <code>launchd</code>).</p>
+        <p>This initializes the Virtualization.framework backend. You'll be prompted for your password once — Apple Container needs it to create VMs.</p>
+        <p>If you're prompted about a default kernel, say yes — it'll download the Kata Containers kernel (~30 seconds).</p>
         <p>Verify the system is running:</p>
         <pre><code class="language-bash">container system status</code></pre>
       </div>
     </section>
 
     <section class="section section-alt">
+      <div class="container">
+        <h2>Troubleshooting: If It Didn't Work</h2>
+        <p>These are the 4 most common first-run failures — pulled from <a href="https://github.com/apple/container/issues" target="_blank" rel="noopener">GitHub issues</a> and community reports. If yours isn't here, the production manual covers 14 more installation edge cases.</p>
+
+        <div class="faq-list" style="margin-top:20px;">
+          <details class="faq-item">
+            <summary>"No default kernel configured" prompt</summary>
+            <div class="faq-answer">
+              <p>Apple Container needs a Linux kernel. Say <strong>yes</strong> to the prompt — it'll download the Kata Containers kernel (3.17.0+). Takes ~30 seconds on a fast connection. If you accidentally said no, run <code>container system stop && container system start</code> to trigger the prompt again.</p>
+            </div>
+          </details>
+          <details class="faq-item">
+            <summary>"Connection refused" when accessing your container</summary>
+            <div class="faq-answer">
+              <p>Apple Container needs <strong>Local Network</strong> access to assign IPs. Open <strong>System Settings → Privacy & Security → Local Network</strong> and enable your terminal app. Then restart the container system: <code>container system stop && container system start</code>.</p>
+            </div>
+          </details>
+          <details class="faq-item">
+            <summary>"container system start" crashes with a fatal error</summary>
+            <div class="faq-answer">
+              <p>Check that <code>~/Library/Application Support/com.apple.container/</code> is writable. If you migrated from macOS 15 or an earlier beta, the app-root directory may have stale permissions. Run <code>container system stop && container system start --reset</code> to reinitialize. (<a href="https://github.com/apple/container/issues/1802" target="_blank" rel="noopener">GitHub #1802</a>)</p>
+            </div>
+          </details>
+          <details class="faq-item">
+            <summary>On macOS 15? Container-to-container networking is limited</summary>
+            <div class="faq-answer">
+              <p>macOS 15 has severely limited networking features for Apple Container. DNS-based service discovery (<code>name.dev.internal</code>) may not work. <strong>Upgrade to macOS 26+ for full functionality</strong> — this entire guide assumes macOS 26 or later. If you're stuck on macOS 15, stick with Docker Desktop for multi-container setups.</p>
+            </div>
+          </details>
+        </div>
+
+        <div class="note" style="margin-top:20px;">
+          <strong>Still stuck?</strong> The <a href="/production-guide/">production manual</a> covers 14 more installation edge cases with exact error messages and verified fixes — kernel download failures, Local Network permission workflow, app-root crashes, and macOS version-specific issues. <a href="/production-guide/">Get the manual →</a>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
       <div class="container">
         <h2>Step 3: Configure DNS</h2>
         <p>Apple Container uses its own DNS domain for inter-container communication. Set it once:</p>
