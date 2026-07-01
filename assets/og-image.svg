@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630" width="1200" height="630">
+  <rect width="1200" height="630" fill="#0a0a0a"/>
+  <rect x="0" y="0" width="1200" height="8" fill="#007AFF"/>
+  <text x="600" y="260" text-anchor="middle" font-family="Arial,Helvetica,sans-serif" font-size="48" font-weight="bold" fill="#ffffff">Migrate from Docker to</text>
+  <text x="600" y="330" text-anchor="middle" font-family="Arial,Helvetica,sans-serif" font-size="56" font-weight="bold" fill="#007AFF">Apple Container</text>
+  <text x="600" y="410" text-anchor="middle" font-family="Arial,Helvetica,sans-serif" font-size="28" fill="#86868b">Production-ready macOS containerization — no Docker Desktop</text>
+  <text x="600" y="560" text-anchor="middle" font-family="Arial,Helvetica,sans-serif" font-size="22" fill="#007AFF">maccontainer.dev</text>
+</svg>
