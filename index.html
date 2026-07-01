@@ -15,16 +15,34 @@
   <meta property="og:description" content="Stop paying for Docker Desktop. Apple Container boots in under 1 second on Apple Silicon. Step-by-step migration.">
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://maccontainer.dev/">
+  <meta property="og:site_name" content="MacContainer.dev">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Migrate from Docker to Apple Container — Free Guide">
+  <meta name="twitter:description" content="Stop paying for Docker Desktop. Apple Container boots in under 1 second on Apple Silicon. Step-by-step migration.">
   <link rel="stylesheet" href="/css/style.css?v=2">
   <link rel="icon" type="image/svg+xml" href="/favicon.svg">
   <link rel="canonical" href="https://maccontainer.dev/">
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
-    "@type": "WebSite",
-    "name": "MacContainer.dev",
-    "url": "https://maccontainer.dev/",
-    "description": "Free guide to migrate from Docker Desktop to Apple Container on macOS."
+    "@graph": [
+      {
+        "@type": "Organization",
+        "name": "MacContainer.dev",
+        "url": "https://maccontainer.dev",
+        "description": "Free guide to migrate from Docker Desktop to Apple Container on macOS."
+      },
+      {
+        "@type": "WebSite",
+        "name": "MacContainer.dev",
+        "url": "https://maccontainer.dev/",
+        "potentialAction": {
+          "@type": "SearchAction",
+          "target": "https://maccontainer.dev/?q={search_term_string}",
+          "query-input": "required name=search_term_string"
+        }
+      }
+    ]
   }
   </script>
 </head>
