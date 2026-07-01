@@ -26,18 +26,20 @@
     "@context": "https://schema.org",
     "@graph": [
       {
-        "@type": "TechArticle",
-        "headline": "Apple Container Setup — Install & Run First Container in 10 Minutes",
-        "description": "Install Apple Container on macOS 26, configure DNS, and run your first container. Clear step-by-step with verified commands.",
-        "author": { "@type": "Organization", "name": "MacContainer.dev" },
-        "publisher": { "@type": "Organization", "name": "MacContainer.dev" }
+        "@type": "HowTo",
+        "name": "Install Apple Container & Run First Container",
+        "description": "Install Apple Container on macOS 26, configure DNS, and run your first container. Complete 4-step guide.",
+        "step": [
+          { "@type": "HowToStep", "position": 1, "name": "Install Apple Container", "text": "Install via brew install apple-container or download the PKG from Apple Developer." },
+          { "@type": "HowToStep", "position": 2, "name": "Start the Container System", "text": "Run ctr system start to launch the container runtime. Verify with ctr system info." },
+          { "@type": "HowToStep", "position": 3, "name": "Configure DNS", "text": "Set up dev.internal domain resolution with scutil or /etc/hosts for container-to-container networking." },
+          { "@type": "HowToStep", "position": 4, "name": "Pull and Run Your First Container", "text": "Run ctr image pull and ctr run to pull and start your first containerized application." }
+        ]
       },
       {
-        "@type": "BreadcrumbList",
-        "itemListElement": [
-          { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://maccontainer.dev/" },
-          { "@type": "ListItem", "position": 2, "name": "Installation", "item": "https://maccontainer.dev/installation/" }
-        ]
+        "@type": "TechArticle",
+        "headline": "Apple Container Setup — Install & Run First Container in 10 Minutes",
+        "author": { "@type": "Organization", "name": "MacContainer.dev" }
       }
     ]
   }
