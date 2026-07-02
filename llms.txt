@@ -1,0 +1,18 @@
+# MacContainer.dev
+> Production deployment guide for macOS containerization — Docker, OrbStack, Colima, Compose alternatives, stack templates.
+
+## Core pages
+Page: https://maccontainer.dev/
+Page: https://maccontainer.dev/installation/ — Install Docker, OrbStack, or Colima on Apple Silicon
+Page: https://maccontainer.dev/pricing/ — Production Guide pricing
+Page: https://maccontainer.dev/production-guide/ — Full production manual
+
+## Guides
+Page: https://maccontainer.dev/compose-alternative/ — Docker Compose alternatives for macOS
+Page: https://maccontainer.dev/stack-templates/ — Production-ready stack templates
+Page: https://maccontainer.dev/faq/ — Common questions about macOS containerization
+
+## Legal
+Page: https://maccontainer.dev/privacy/
+Page: https://maccontainer.dev/terms/
+Page: https://maccontainer.dev/refunds/

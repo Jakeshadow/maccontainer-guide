@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Migrate from Docker to Apple Container — Free Guide | MacContainer.dev</title>
-  <meta name="description" content="Stop paying for Docker Desktop. Apple Container boots in under 1 second on Apple Silicon. Step-by-step migration — compose alternative, stack templates, production setup. Free guide.">
+  <meta name="description" content="Self-host Docker on Apple Silicon — OrbStack vs Colima vs Docker Desktop. Production stack templates, Compose alternatives. Zero hype.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Google+Sans:wght@400;500;700&family=Roboto:wght@300;400;500;700&family=Roboto+Mono:wght@400;500&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
@@ -24,6 +24,7 @@
   <link rel="stylesheet" href="/css/style.css?v=2">
   <link rel="icon" type="image/svg+xml" href="/favicon.svg">
   <link rel="canonical" href="https://maccontainer.dev/">
+  <meta property="og:locale" content="en_US">
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
@@ -43,6 +44,25 @@
           "target": "https://maccontainer.dev/?q={search_term_string}",
           "query-input": "required name=search_term_string"
         }
+      },
+      {
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+          {
+            "@type": "ListItem",
+            "position": 1,
+            "name": "Home",
+            "item": "https://maccontainer.dev/"
+          }
+        ]
+      },
+      {
+        "@type": "FAQPage",
+        "mainEntity": [
+          {"@type":"Question","name":"Does Apple Container replace Docker completely?","acceptedAnswer":{"@type":"Answer","text":"For macOS developers on Apple Silicon running macOS 26+, yes — with the compose workaround on this site. If you need x86 containers or cross-platform CI, keep Docker around for those use cases. Many teams run both side by side during migration."}},
+          {"@type":"Question","name":"Is Apple Container faster than Docker Desktop?","acceptedAnswer":{"@type":"Answer","text":"Container startup is noticeably faster (<1s vs 3-5s for Docker Desktop on macOS) because Apple Container skips the Linux VM layer. I/O is faster for bind-mounted volumes using native APFS. Network throughput is comparable."}},
+          {"@type":"Question","name":"When will Apple officially support compose?","acceptedAnswer":{"@type":"Answer","text":"Apple hasn't announced a timeline. The docker/compose repo tracks this in issue #12934. Until then, Container Machines + shell script orchestration is the working solution — and this site documents the full conversion pattern."}}
+        ]
       }
     ]
   }

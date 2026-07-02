@@ -10,7 +10,7 @@
   <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css" rel="stylesheet" media="print" onload="this.media='all'">
   <noscript><link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css" rel="stylesheet"></noscript>
   <title>Apple Container FAQ — Compatibility, Performance, Compose Timeline</title>
-  <meta name="description" content="Common questions about migrating from Docker to Apple Container — compatibility, performance benchmarks, compose support timeline, security.">
+  <meta name="description" content="Common questions about macOS containerization — Docker Desktop alternatives, OrbStack licensing, Colima GPU, volume performance.">
   <meta property="og:title" content="Apple Container FAQ — Compatibility, Performance, Compose Timeline">
   <meta property="og:description" content="Common questions about migrating from Docker to Apple Container — compatibility, performance, compose support timeline.">
   <meta property="og:type" content="website">
@@ -23,11 +23,32 @@
   <link rel="stylesheet" href="/css/style.css?v=2">
   <link rel="icon" type="image/svg+xml" href="/favicon.svg">
   <link rel="canonical" href="https://maccontainer.dev/faq/">
+  <meta property="og:locale" content="en_US">
+  <meta property="og:site_name" content="MacContainer.dev">
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
-    "@type": "FAQPage",
-    "mainEntity": [
+    "@graph": [
+      {
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+          {
+            "@type": "ListItem",
+            "position": 1,
+            "name": "Home",
+            "item": "https://maccontainer.dev/"
+          },
+          {
+            "@type": "ListItem",
+            "position": 2,
+            "name": "FAQ",
+            "item": "https://maccontainer.dev/faq/"
+          }
+        ]
+      },
+      {
+        "@type": "FAQPage",
+        "mainEntity": [
       {"@type":"Question","name":"Can Apple Container fully replace Docker Desktop on macOS?","acceptedAnswer":{"@type":"Answer","text":"For Apple Silicon Macs running macOS 26+, yes — with the compose workaround described on this site. Keep Docker around for x86 containers or cross-platform CI."}},
       {"@type":"Question","name":"Is Apple Container faster than Docker Desktop?","acceptedAnswer":{"@type":"Answer","text":"Container startup is noticeably faster (<1s vs 3-5s for Docker Desktop) because Apple Container skips the Linux VM layer. I/O throughput is better for bind-mounted volumes."}},
       {"@type":"Question","name":"When will Apple officially support Docker Compose?","acceptedAnswer":{"@type":"Answer","text":"Apple hasn't announced a timeline. Until then, Container Machines + shell scripts is the working solution documented on this site."}},
@@ -40,6 +61,8 @@
       {"@type":"Question","name":"Is Apple Container really production-safe?","acceptedAnswer":{"@type":"Answer","text":"Each container runs in its own VM on Virtualization.framework — stronger isolation than Docker's shared-kernel model. But production readiness requires work Apple didn't document. The manual covers this."}}
     ]
   }
+]
+}
   </script>
 </head>
 <body>
